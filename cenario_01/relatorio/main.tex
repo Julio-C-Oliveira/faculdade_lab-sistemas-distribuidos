@@ -1,0 +1,65 @@
+ \documentclass[a4paper, 12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage[lmargin=3cm, tmargin=3cm, rmargin=2cm, bmargin=2cm]{geometry}
+\usepackage[portuguese, ruled, linesnumbered]{algorithm2e}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{listings} % Para usa ra formatação de código
+\usepackage{enumitem} % Para enumerar.
+\usepackage{listings}
+\usepackage{booktabs}
+
+%\renewcommand{\today}{\day/\month/\year}
+
+\usepackage[hypertexnames=false]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Relatório de Atividades - Computação Gráfica},
+}
+
+\renewcommand{\labelitemii}{$\circ$}
+
+\begin{document}
+\begin{figure}
+    \centering
+    \includegraphics[width=4cm]{pics/Logo_UFPA.png}
+\end{figure}
+
+\begin{center}
+\textbf{Universidade Federal do Pará}\\
+\textbf{Instituto de Ciências Exatas e Naturais}\\
+\textbf{Faculdade de Ciências da Computação}\\
+\textbf{Laboratório de Sistemas Distribuídos}\\
+\end{center}
+
+\begin{center}
+\textbf{1º Relatório}
+\end{center}
+
+\begin{flushleft}
+\textbf{Discentes:}
+\begin{itemize}[itemsep=0px, label=-]
+    \item Júlio Costa Oliveira
+    \item Luiz Gabriel Santos Moreira
+\end{itemize}
+\textbf{Matrículas:} 
+\begin{itemize}[itemsep=0px, label=-]
+    \item 202104940025
+    \item 202304940001
+\end{itemize}
+\textbf{Data:} \today
+\end{flushleft}
+
+
+\newpage
+
+\input{sections/introduction}
+\input{sections/body}
+% \input{sections/conclusion}
+% \input{sections/appendix}
+\input{sections/references}
+
+\end{document}

@@ -1,0 +1,9 @@
+\section{INTRODUÇÃO}
+
+Este relatório apresenta a documentação e análise detalhada da arquitetura de rede do segundo cenário do Laboratório de Sistemas Distribuídos, implementada e simulada no Cisco Packet Tracer (v9.0.1). O cenário compreende uma topologia de rede distribuída com núcleo WAN em malha completa (\textit{full-mesh}), roteadores de borda para atendimento a redes locais (LANs), distribuição de hosts e protocolo de roteamento dinâmico OSPF (Open Shortest Path First) operando em área única 0.
+
+O objetivo deste trabalho é analisar os aspectos de camadas física, de enlace e de rede da infraestrutura, detalhando os esquemas de endereçamento IPv4, cálculo de métricas e tabelas de roteamento esperadas (RIB), bem como a redundância e tolerância a falhas provida pelo backbone de interconexão.
+
+\subsection{Contextualização e Visão Geral da Topologia}
+
+A topologia interliga quatro localidades departamentais (Sites de A a D) a um núcleo central de comutação de pacotes de alta disponibilidade. O núcleo é formado por quatro roteadores interconectados por enlaces seriais ponto a ponto dedicados, assegurando múltiplos caminhos alternativos para o encaminhamento de tráfego entre qualquer par de redes locais.

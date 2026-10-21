@@ -1,0 +1,44 @@
+\section{INTRODUÇÃO}
+
+Este relatório apresenta a análise e a documentação de uma infraestrutura de rede
+corporativa departamentalizada, implementada e simulada na ferramenta Cisco Packet
+Tracer (v9.0.1). O cenário exercita a segmentação de domínios de broadcast por meio
+de VLANs (\textit{Virtual Local Area Networks}), o transporte de múltiplas VLANs
+sobre enlaces de agregação com encapsulamento IEEE 802.1Q, o roteamento inter-VLAN
+no modelo \textit{router-on-a-stick} e, na versão final aqui documentada, a
+distribuição dinâmica de endereços IP por meio de servidores DHCP hospedados nos
+próprios comutadores de acesso.
+
+A relevância do cenário reside na reprodução de um problema recorrente em ambientes
+empresariais: setores distintos precisam compartilhar a mesma infraestrutura física de
+comutação sem compartilhar o mesmo domínio de broadcast. O isolamento de tráfego entre
+departamentos é garantido pelas VLANs, enquanto a comunicação controlada entre eles é
+provida pelo roteador central. A atribuição dinâmica de endereços, delegada aos
+comutadores, elimina a dependência de um servidor DHCP externo dedicado e distribui
+a carga entre os dois equipamentos de acesso.
+
+\subsection{Contextualização e Motivação do Cenário Corporativo}
+
+A arquitetura foi idealizada para atender a uma organização de médio porte dividida
+em quatro setores funcionais, cada um mapeado em uma VLAN e em uma sub-rede IP
+próprias, acrescida de uma VLAN de gerência/suporte:
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{VLAN 10 --- VENDAS:} setor comercial. Todos os terminais utilizam
+        endereçamento dinâmico via DHCP, refletindo a rotatividade característica
+        de equipes de vendas e de dispositivos compartilhados como impressoras.
+
+  \item \textbf{VLAN 20 --- MARKETING:} setor de comunicação e campanhas, com
+        endereçamento estático atribuído manualmente às estações.
+
+  \item \textbf{VLAN 30 --- ADM:} setor administrativo. Por tratar dados sensíveis
+        de gestão, exige isolamento em relação aos demais domínios de broadcast.
+
+  \item \textbf{VLAN 40 --- TIC:} setor de Tecnologia da Informação e Comunicação,
+        responsável pela operação da própria infraestrutura de rede.
+
+  \item \textbf{VLAN 1 --- Gerência/Suporte:} reservada ao tráfego de gerência dos
+        ativos de camada 2 por meio de interfaces virtuais de comutação (SVI) e ao
+        acesso de laptops de suporte técnico que precisam alcançar e configurar
+        qualquer equipamento da rede.
+\end{itemize}

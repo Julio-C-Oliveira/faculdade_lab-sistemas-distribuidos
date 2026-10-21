@@ -1,33 +1,61 @@
-# Trabalhos de Laboratório — Sistemas Distribuídos e Redes
+# Laboratório de Sistemas Distribuídos — Práticas e Relatórios
 **Universidade Federal do Pará (UFPA)**  
 **Instituto de Ciências Exatas e Naturais (ICEN)**  
-**Curso de Ciência da Computação**  
-**Equipe 08**: Luiz Gabriel Santos Moreira & Christian de Jesus da Costa Marinho
+**Faculdade de Ciências da Computação**  
+**Equipe 08**: Júlio Costa Oliveira & Luiz Gabriel Santos Moreira
+
+---
+
+## 🏷️ Padrão Oficial de Nomenclatura
+
+Para manter consistência e conformidade com as submissões acadêmicas, todos os arquivos de cada cenário $XX \in \{01, 02\}$ seguem o padrão:
+
+- **Pacote Compactado de Entrega**: `cenario_XX_equipe_08_Lab_SD.zip`
+- **Relatório em PDF**: `cenario_XX_equipe_08_Lab_SD.pdf`
+- **Topologia Packet Tracer**: `cenario_XX_equipe_08_Lab_SD.pkt`
+- **Topologia Decodificada em XML**: `cenario_XX_equipe_08_Lab_SD.xml`
 
 ---
 
 ## 📁 Estrutura do Repositório
 
-O repositório é organizado de forma modular para isolar os diferentes cenários práticos e ferramentas de apoio:
+O repositório adota uma organização simétrica e modular entre os cenários:
 
 ```
 trabalho_lab_sd/
-├── README.md                      # Este arquivo (visão geral do repositório)
-├── .gitignore                     # Regras para ignorar temporários de LaTeX e SO
-├── archives/                      # Cópias de segurança de arquivos brutos compactados
-│   └── cenario_02.tar.xz
+├── README.md                      # Este arquivo (visão geral, equipe e padrões)
+├── .gitignore                     # Filtros para artefatos de build LaTeX, Python e SO
+├── archives/                      # Backups de arquivos compactados originais
+│   ├── cenario_02.tar.xz
+│   └── First_Report_on_Distributed_Systems.zip
 ├── cenario_01/                    # Cenário 01: Segmentação por VLANs e DHCP Distribuído
-│   ├── README.md                  # Descrição específica do Cenário 01
-│   ├── packet_tracer/             # Arquivos de topologia (.pkt, .xml)
-│   ├── relatorio/                 # Fontes LaTeX (.tex) e relatórios em PDF
-│   └── entregas/                  # Arquivos e pacotes finais entregues (.zip, .pdf)
+│   ├── README.md                  # Contexto, objetivos e modelo de e-mail pronto
+│   ├── packet_tracer/             # Topologias (.pkt e .xml)
+│   │   ├── original.pkt           # Topologia base fornecida
+│   │   ├── cenario_01_equipe_08_Lab_SD.pkt
+│   │   └── cenario_01_equipe_08_Lab_SD.xml
+│   ├── relatorio/                 # Projeto LaTeX oficial
+│   │   ├── main.tex               # Documento principal da equipe (1º Relatório)
+│   │   ├── pics/Logo_UFPA.png     # Brasão da UFPA
+│   │   ├── sections/              # introduction, body, references, etc.
+│   │   └── template/sbc.bst       # Estilo bibliográfico SBC
+│   └── entregas/                  # Arquivos prontos para envio
+│       ├── cenario_01_equipe_08_Lab_SD.pdf
+│       └── cenario_01_equipe_08_Lab_SD.zip
 ├── cenario_02/                    # Cenário 02: Topologia Distribuída, Roteamento OSPF e RIB
-│   ├── README.md                  # Descrição específica do Cenário 02
-│   ├── packet_tracer/             # Diretório reservado para topologias .pkt/.xml do Cenário 02
-│   ├── relatorio_cenario2_*.{tex,pdf,md,html} # Relatórios em múltiplos formatos
-│   ├── cenario_ideal.png / cenario_real.png    # Diagramas lógicos da rede
-│   └── *.tex                      # Tabelas auxiliares modulares (RIB, configs, portas, etc.)
-└── tools/                         # Scripts e utilitários
+│   ├── README.md                  # Contexto, resumo OSPF e modelo de e-mail pronto
+│   ├── packet_tracer/             # Reservado para os arquivos de topologia .pkt e .xml
+│   ├── relatorio/                 # Projeto LaTeX oficial (mesmo padrão do Cenário 01)
+│   │   ├── main.tex               # Documento principal da equipe (2º Relatório)
+│   │   ├── pics/                  # Logo_UFPA.png, cenario_ideal.png, cenario_real.png
+│   │   ├── sections/              # introduction, body, references, etc.
+│   │   │   └── tabelas/           # ifaces.tex, switchports.tex, pcs.tex, rib.tex, etc.
+│   │   └── template/sbc.bst       # Estilo bibliográfico SBC
+│   ├── analise/                   # Relatórios auxiliares gerados (.md e .html)
+│   └── entregas/                  # Arquivos prontos para envio
+│       ├── cenario_02_equipe_08_Lab_SD.pdf
+│       └── cenario_02_equipe_08_Lab_SD.zip
+└── tools/                         # Utilitários compartilhados
     └── decrypt_pkt_9-0-0.py       # Decompilador de arquivos .pkt do Packet Tracer 9.x
 ```
 
@@ -36,16 +64,14 @@ trabalho_lab_sd/
 ## 🛠️ Ferramentas
 
 ### Decompilador Packet Tracer (`tools/decrypt_pkt_9-0-0.py`)
-Converte contêineres criptografados `.pkt` do Cisco Packet Tracer 9.x em arquivos XML legíveis para auditoria e automação:
-
+Utilitário Python para descriptografar arquivos de topologia `.pkt` do Cisco Packet Tracer 9.x:
 ```bash
-python3 tools/decrypt_pkt_9-0-0.py caminho/para/arquivo.pkt
+python3 tools/decrypt_pkt_9-0-0.py caminho/para/topologia.pkt
 ```
-O XML correspondente será gerado no mesmo diretório do arquivo `.pkt`.
 
 ---
 
-## 📖 Cenários
+## 📖 Documentação por Cenário
 
-- [Cenário 01 — Documentação](cenario_01/README.md)
-- [Cenário 02 — Documentação](cenario_02/README.md)
+- [Cenário 01 — Detalhes e E-mail de Envio](cenario_01/README.md)
+- [Cenário 02 — Detalhes e E-mail de Envio](cenario_02/README.md)
