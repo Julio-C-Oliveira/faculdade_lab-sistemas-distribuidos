@@ -70,15 +70,28 @@ trabalho_lab_sd/
 │   └── entregas/                  # Arquivos prontos para envio
 │       ├── cenario_02_equipe_08_Lab_SD.pdf
 │       └── cenario_02_equipe_08_Lab_SD.zip
+├── .agents/skills/novo-cenario-sd/ # Skill do Antigravity para criação automática de cenários
+│   ├── SKILL.md                   # Instruções e protocolo de automação para o agente
+│   └── scripts/process_cenario.py # Motor de extração XML, RIB Dijkstra, LaTeX e empacotamento
 └── tools/                         # Utilitários compartilhados
     └── decrypt_pkt_9-0-0.py       # Decompilador de arquivos .pkt do Packet Tracer 9.x
 ```
 
 ---
 
-## 🛠️ Ferramentas
+## 🛠️ Ferramentas e Automação
 
-### Decompilador Packet Tracer (`tools/decrypt_pkt_9-0-0.py`)
+### 1. Skill de Automação de Novos Cenários (`.agents/skills/novo-cenario-sd/`)
+Basta adicionar o arquivo do novo cenário (`.pkt`, `.zip` ou `.tar.xz`) na pasta `archives/` e pedir ao agente para estruturar o cenário (ex: *"crie o Cenário 03 a partir do arquivo em archives"*). O motor também pode ser acionado via linha de comando:
+```bash
+# Extrair, auditar XML, gerar tabelas LaTeX e estruturar Cenário XX:
+python3 .agents/skills/novo-cenario-sd/scripts/process_cenario.py --cenario 03
+
+# Compilar PDF (2 passadas pdflatex) e fechar o pacote .zip de entrega:
+python3 .agents/skills/novo-cenario-sd/scripts/process_cenario.py --cenario 03 --package
+```
+
+### 2. Decompilador Packet Tracer (`tools/decrypt_pkt_9-0-0.py`)
 Utilitário Python para descriptografar arquivos de topologia `.pkt` do Cisco Packet Tracer 9.x:
 ```bash
 python3 tools/decrypt_pkt_9-0-0.py caminho/para/topologia.pkt
