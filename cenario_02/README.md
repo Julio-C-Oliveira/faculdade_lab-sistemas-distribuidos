@@ -7,7 +7,13 @@ Análise e auditoria completa de infraestrutura de rede distribuída com núcleo
 
 ## ✉️ Modelo de E-mail para Envio da Atividade
 
+- **Título (Assunto):** `Cenário 02 - equipe 08 - Laboratório de Sistemas Distribuidos`
+- **Arquivo a anexar (Ficheiro):** `cenario_02_equipe_08_Lab_SD.zip` (em `entregas/`)
+
 ```text
+Assunto: Cenário 02 - equipe 08 - Laboratório de Sistemas Distribuidos
+Anexo: cenario_02_equipe_08_Lab_SD.zip
+
 Bom dia professor, segue em anexo a segunda atividade cenario_02_equipe_08_Lab_SD.zip
 
 Discentes: 

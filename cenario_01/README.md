@@ -7,7 +7,13 @@ Configuração de infraestrutura de rede corporativa segmentada via VLANs em com
 
 ## ✉️ Modelo de E-mail para Envio da Atividade
 
+- **Título (Assunto):** `Cenário 01 - equipe 08 - Laboratório de Sistemas Distribuidos`
+- **Arquivo a anexar (Ficheiro):** `cenario_01_equipe_08_Lab_SD.zip` (em `entregas/`)
+
 ```text
+Assunto: Cenário 01 - equipe 08 - Laboratório de Sistemas Distribuidos
+Anexo: cenario_01_equipe_08_Lab_SD.zip
+
 Bom dia professor, segue em anexo a primeira atividade cenario_01_equipe_08_Lab_SD.zip
 
 Discentes: 

@@ -15,6 +15,21 @@ Para manter consistência e conformidade com as submissões acadêmicas, todos o
 - **Topologia Packet Tracer**: `cenario_XX_equipe_08_Lab_SD.pkt`
 - **Topologia Decodificada em XML**: `cenario_XX_equipe_08_Lab_SD.xml`
 
+### ✉️ Formato Padrão de E-mail para Submissão
+- **Título (Assunto):** `Cenário XX - equipe 08 - Laboratório de Sistemas Distribuidos`
+- **Arquivo a anexar (Ficheiro):** `cenario_XX_equipe_08_Lab_SD.zip` (em `entregas/`)
+
+```text
+Assunto: Cenário XX - equipe 08 - Laboratório de Sistemas Distribuidos
+Anexo: cenario_XX_equipe_08_Lab_SD.zip
+
+Bom dia professor, segue em anexo a atividade cenario_XX_equipe_08_Lab_SD.zip
+
+Discentes: 
+- Júlio Costa Oliveira
+- Luiz Gabriel Santos Moreira
+```
+
 ---
 
 ## 📁 Estrutura do Repositório
