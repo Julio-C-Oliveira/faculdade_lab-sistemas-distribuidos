@@ -85,27 +85,45 @@ trabalho_lab_sd/
 
 ## 🛠️ Ferramentas e Skills de Automação
 
+### 🚀 Como Usar as Skills (Guia Rápido)
+
+Você pode acionar as skills **diretamente pelo chat do Antigravity** (usando linguagem natural ou `@nome-da-skill`) ou **via terminal**:
+
+| Skill | Exemplo de Prompt no Chat (Antigravity) | Exemplo Direto no Terminal |
+| :--- | :--- | :--- |
+| **`novo-cenario-sd`**<br>*(Criar novo cenário)* | *"Adicionei o arquivo do cenário 3 em `archives/`, use a skill `novo-cenario-sd` para estruturar o `cenario_03` completo e gerar o PDF e ZIP."* | `python3 .agents/skills/novo-cenario-sd/scripts/process_cenario.py --cenario 03 && python3 .agents/skills/novo-cenario-sd/scripts/process_cenario.py --cenario 03 --package` |
+| **`testar-generalizacao-sd`**<br>*(Testar e aprimorar)* | *"Use a skill `testar-generalizacao-sd` para verificar se o `cenario_03` tem 100% de cobertura XML e se não houve regressão nos anteriores."* | `python3 .agents/skills/testar-generalizacao-sd/scripts/verify_generalization.py --compile-latex` |
+
+---
+
 ### 1. Skill de Criação e Padronização de Cenários (`.agents/skills/novo-cenario-sd/`)
-Coordena a criação completa de novos cenários (`cenario_03`, `cenario_04`, etc.) a partir de arquivos adicionados em `archives/` (`.pkt`, `.xml`, `.zip`, `.tar.xz`), extraindo 100% da topologia real (Roteadores, Switches L2/L3, VLANs/Trunks, OSPF, EIGRP, RIP, Rotas Estáticas, DHCP, PCs, Laptops, Servidores, Impressoras, VoIP), calculando a RIB esperada e gerando o relatório LaTeX/PDF e pacote `.zip` final:
+Coordena a criação completa de novos cenários (`cenario_03`, `cenario_04`, etc.) a partir de arquivos adicionados em `archives/` (`.pkt`, `.xml`, `.zip`, `.tar.xz`), extraindo 100% da topologia real (Roteadores, Switches L2/L3, VLANs/Trunks, OSPF, EIGRP, RIP, Rotas Estáticas, DHCP, PCs, Laptops, Servidores, Impressoras, VoIP), calculando a RIB esperada e gerando o relatório LaTeX/PDF e pacote `.zip` final.
+
+**Exemplo passo a passo para criar um novo cenário:**
+1. Coloque o arquivo `.pkt` (ou pacote `.zip`/`.tar.xz`) dentro da pasta `archives/` (ex: `archives/cenario_03.pkt`).
+2. Peça no chat: *"Crie o Cenário 03 a partir do arquivo em archives/"* **ou** execute no terminal:
 ```bash
-# Extrair, auditar XML, gerar tabelas LaTeX, análises (.md/.html) e estruturar Cenário XX:
+# Passo 1: Extrair, decodificar .pkt -> .xml, gerar tabelas LaTeX, análises (.md/.html) e estruturar cenario_03/:
 python3 .agents/skills/novo-cenario-sd/scripts/process_cenario.py --cenario 03
 
-# Apenas auditar um XML existente no cenário e exibir resumo no terminal:
-python3 .agents/skills/novo-cenario-sd/scripts/process_cenario.py --cenario 02 --audit-only
-
-# Compilar PDF (2 passadas pdflatex) e fechar o pacote .zip oficial de entrega:
+# Passo 2: Compilar PDF (2 passadas pdflatex) e fechar o pacote cenario_03_equipe_08_Lab_SD.zip em entregas/:
 python3 .agents/skills/novo-cenario-sd/scripts/process_cenario.py --cenario 03 --package
+
+# (Opcional) Apenas auditar um XML existente no cenário e exibir resumo no terminal:
+python3 .agents/skills/novo-cenario-sd/scripts/process_cenario.py --cenario 02 --audit-only
 ```
 
 ### 2. Skill de Verificação de Generalização e Não-Regressão (`.agents/skills/testar-generalizacao-sd/`)
-Audita continuamente a capacidade de generalização da skill `novo-cenario-sd` conforme o número de cenários aumenta. Confronta o XML bruto do Packet Tracer contra os dados extraídos (*Zero-Drop Audit* de dispositivos, cabos e comandos IOS desconhecidos), valida a compilação `pdflatex` em *sandbox*, garante `0 diff` de não-regressão nos cenários anteriores e executa *stress tests* em topologias sintéticas multi-protocolo:
+Audita continuamente a capacidade de generalização da skill `novo-cenario-sd` conforme o número de cenários aumenta. Confronta o XML bruto do Packet Tracer contra os dados extraídos (*Zero-Drop Audit* de dispositivos, cabos e comandos IOS desconhecidos), valida a compilação `pdflatex` em *sandbox*, garante `0 diff` de não-regressão nos cenários anteriores e executa *stress tests* em topologias sintéticas multi-protocolo.
+
+**Exemplo passo a passo para testar e evoluir a skill:**
+1. Após adicionar um novo cenário ou alterar o `process_cenario.py`, peça no chat: *"Verifique a generalização da skill em todos os cenários"* **ou** execute no terminal:
 ```bash
 # Rodar auditoria completa em todos os cenários + stress test sintético + compilação LaTeX:
 python3 .agents/skills/testar-generalizacao-sd/scripts/verify_generalization.py --compile-latex
 
-# Testar apenas um cenário específico:
-python3 .agents/skills/testar-generalizacao-sd/scripts/verify_generalization.py --cenario 02 --compile-latex
+# Testar apenas um cenário específico (ex: recém-criado Cenário 03):
+python3 .agents/skills/testar-generalizacao-sd/scripts/verify_generalization.py --cenario 03 --compile-latex
 
 # Exportar relatório detalhado de cobertura e evolução em Markdown:
 python3 .agents/skills/testar-generalizacao-sd/scripts/verify_generalization.py --report-out relatorio_generalizacao.md
