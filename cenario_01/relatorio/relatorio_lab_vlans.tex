@@ -1,0 +1,411 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{hidelinks}
+
+\setlength{\parindent}{1.5em}
+
+\begin{document}
+
+% ------------------------------------------------------------------ capa
+\begin{titlepage}
+\centering
+
+{\large UNIVERSIDADE FEDERAL DO PARÁ (UFPA)}\\[0.3cm]
+{\large INSTITUTO DE CIÊNCIAS EXATAS E NATURAIS (ICEN)}\\[0.3cm]
+{\large CURSO DE CIÊNCIA DA COMPUTAÇÃO}\\[3.5cm]
+
+{\LARGE\bfseries RELATÓRIO FINAL CENÁRIO DE REDE DE COMPUTADORES}\\[0.6cm]
+{\large Segmentação por VLANs, Roteamento Inter-VLAN e DHCP Distribuído}\\[3.5cm]
+
+{\large\bfseries Autores:}\\[0.3cm]
+{\large Luiz Gabriel Santos Moreira - 202304940001}\\[0.2cm]
+{\large Christian de Jesus da Costa Marinho - 202004940041}\\[3.5cm]
+
+\vfill
+{\large Belém - PA}\\[0.2cm]
+{\large 2026}
+
+\end{titlepage}
+
+% ------------------------------------------------------------------ sumário
+\tableofcontents
+\newpage
+
+% ------------------------------------------------------------------ 1
+\section{INTRODUÇÃO}
+
+Este relatório apresenta a análise e a documentação de uma infraestrutura de rede
+corporativa departamentalizada, implementada e simulada na ferramenta Cisco Packet
+Tracer (v9.0.1). O cenário exercita a segmentação de domínios de broadcast por meio
+de VLANs (\textit{Virtual Local Area Networks}), o transporte de múltiplas VLANs
+sobre enlaces de agregação com encapsulamento IEEE 802.1Q, o roteamento inter-VLAN
+no modelo \textit{router-on-a-stick} e, na versão final aqui documentada, a
+distribuição dinâmica de endereços IP por meio de servidores DHCP hospedados nos
+próprios comutadores de acesso.
+
+A relevância do cenário reside na reprodução de um problema recorrente em ambientes
+empresariais: setores distintos precisam compartilhar a mesma infraestrutura física de
+comutação sem compartilhar o mesmo domínio de broadcast. O isolamento de tráfego entre
+departamentos é garantido pelas VLANs, enquanto a comunicação controlada entre eles é
+provida pelo roteador central. A atribuição dinâmica de endereços, delegada aos
+comutadores, elimina a dependência de um servidor DHCP externo dedicado e distribui
+a carga entre os dois equipamentos de acesso.
+
+\subsection{Contextualização e Motivação do Cenário Corporativo}
+
+A arquitetura foi idealizada para atender a uma organização de médio porte dividida
+em quatro setores funcionais, cada um mapeado em uma VLAN e em uma sub-rede IP
+próprias, acrescida de uma VLAN de gerência/suporte:
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{VLAN 10 --- VENDAS:} setor comercial. Todos os terminais utilizam
+        endereçamento dinâmico via DHCP, refletindo a rotatividade característica
+        de equipes de vendas e de dispositivos compartilhados como impressoras.
+
+  \item \textbf{VLAN 20 --- MARKETING:} setor de comunicação e campanhas, com
+        endereçamento estático atribuído manualmente às estações.
+
+  \item \textbf{VLAN 30 --- ADM:} setor administrativo. Por tratar dados sensíveis
+        de gestão, exige isolamento em relação aos demais domínios de broadcast.
+
+  \item \textbf{VLAN 40 --- TIC:} setor de Tecnologia da Informação e Comunicação,
+        responsável pela operação da própria infraestrutura de rede.
+
+  \item \textbf{VLAN 1 --- Gerência/Suporte:} reservada ao tráfego de gerência dos
+        ativos de camada 2 por meio de interfaces virtuais de comutação (SVI) e ao
+        acesso de laptops de suporte técnico que precisam alcançar e configurar
+        qualquer equipamento da rede.
+\end{itemize}
+
+% ------------------------------------------------------------------ 2
+\section{ARQUITETURA DA SOLUÇÃO}
+
+A arquitetura física adota um modelo hierárquico de dois níveis. A camada de acesso é
+formada por dois comutadores Cisco Catalyst 2960-24TT (\textbf{SW0} e \textbf{SW1}),
+que concentram as estações de trabalho, os notebooks e as impressoras dos quatro
+setores. A camada de distribuição e roteamento é exercida por um único roteador Cisco
+(\textbf{Router0}), conectado à malha de comutação pelo enlace de \textit{uplink}
+proveniente de \textbf{SW1}. Um servidor dedicado (\textbf{Server0}) está conectado
+diretamente à interface \texttt{GigabitEthernet0/0} do roteador, reservado para
+serviços futuros.
+
+Cada VLAN de produção está distribuída simetricamente entre os dois comutadores: as
+mesmas faixas de portas físicas foram atribuídas às mesmas VLANs em ambos os
+equipamentos, e o enlace de agregação entre eles mantém a continuidade de cada domínio
+de broadcast.
+
+\subsection{Mapeamento de Sub-redes e Segmentação Lógica}
+
+\begin{sloppypar}
+O esquema de endereçamento adota blocos privados de Classe C com máscara \texttt{/24}
+(\texttt{255.255.255.0}), alinhando o terceiro octeto ao identificador numérico da
+VLAN correspondente. As sub-redes são:
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{VLAN 1 --- Gerência/Suporte:} \texttt{192.168.1.0/24}. SVIs dos
+        comutadores em \texttt{192.168.1.1} (SW0) e \texttt{192.168.1.2} (SW1).
+        Gateway em \texttt{192.168.1.254} (subinterface do roteador). Laptops de
+        suporte recebem IPs via DHCP.
+
+  \item \textbf{VLAN 10 --- VENDAS:} \texttt{192.168.10.0/24}. Gateway em
+        \texttt{192.168.10.1}. Todos os terminais utilizam DHCP; SW0 serve a
+        faixa \texttt{.11}--\texttt{.100} e SW1 a faixa \texttt{.101}--\texttt{.200}.
+
+  \item \textbf{VLAN 20 --- MARKETING:} \texttt{192.168.20.0/24}. Gateway em
+        \texttt{192.168.20.254}. Endereçamento estático: SW0 (\texttt{.7}--\texttt{.9}),
+        SW1 (\texttt{.107}--\texttt{.109}). Pools DHCP provisionados para
+        expansão futura.
+
+  \item \textbf{VLAN 30 --- ADM:} \texttt{192.168.30.0/24}. Gateway em
+        \texttt{192.168.30.254}. Endereçamento estático: SW0 (\texttt{.13}--\texttt{.15}),
+        SW1 (\texttt{.113}--\texttt{.115}). Pools DHCP provisionados.
+
+  \item \textbf{VLAN 40 --- TIC:} \texttt{192.168.40.0/24}. Gateway em
+        \texttt{192.168.40.254}. Endereçamento estático: SW0 (\texttt{.19}--\texttt{.21}),
+        SW1 (\texttt{.119}--\texttt{.121}). Pools DHCP provisionados.
+\end{itemize}
+\end{sloppypar}
+
+\subsection{Topologia de Terminais por Setor e Comutador}
+
+A distribuição simétrica de dispositivos entre SW0 e SW1 é detalhada a seguir:
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{VLAN 10 --- VENDAS:} PC3, PC4, PC5 e Printer0 em SW0
+        (Fa0/1--Fa0/4); Laptop2(2), Laptop3(2), Laptop4(2) e Printer1 em SW1
+        (Fa0/1--Fa0/4). Endereçamento exclusivamente via DHCP.
+
+  \item \textbf{VLAN 20 --- MARKETING:} PC9, PC10, PC11 em SW0 (Fa0/7--Fa0/9);
+        Laptop2(3), Laptop3(3), Laptop4(3) em SW1 (Fa0/7--Fa0/9).
+
+  \item \textbf{VLAN 30 --- ADM:} PC8, PC7, PC6 em SW0 (Fa0/13--Fa0/15);
+        Laptop2(1), Laptop3(1), Laptop4(1) em SW1 (Fa0/13--Fa0/15).
+
+  \item \textbf{VLAN 40 --- TIC:} PC0, PC1, PC2 em SW0 (Fa0/19--Fa0/21);
+        Laptop4, Laptop3, Laptop2 em SW1 (Fa0/19--Fa0/21).
+
+  \item \textbf{VLAN 1 --- Suporte:} Laptop0 em SW0 (Fa0/24) e Laptop5 em SW1
+        (Fa0/24). Endereçamento via DHCP; SW0 serve \texttt{.10}--\texttt{.50} e
+        SW1 serve \texttt{.51}--\texttt{.100}.
+\end{itemize}
+
+\subsection{Papel dos Ativos de Rede}
+
+\begin{itemize}[leftmargin=2em]
+  \item Os dois comutadores \textbf{2960-24TT} operam na \textbf{Camada 2}, segregando
+        quadros Ethernet em domínios de broadcast distintos e transportando-os marcados
+        pelos enlaces de agregação. Adicionalmente, exercem o papel de
+        \textbf{servidores DHCP} para todas as VLANs, servindo faixas de endereços
+        complementares e sem sobreposição.
+
+  \item As SVIs \texttt{Vlan1} de ambos os comutadores
+        (\texttt{192.168.1.1} em SW0 e \texttt{192.168.1.2} em SW1) exercem a
+        função de \textbf{gerência} do equipamento e servem como endereço de destino
+        para o relay DHCP das VLANs de produção.
+
+  \item O \textbf{roteador} (Router0) é o único ativo de \textbf{Camada 3}. Opera
+        no modelo \textit{router-on-a-stick}: cinco subinterfaces lógicas sobre
+        \texttt{GigabitEthernet2/0} exercem o papel de \textit{default gateway}
+        de cada VLAN e encaminham pedidos DHCP aos servidores nos comutadores
+        por meio do mecanismo \texttt{ip helper-address}.
+
+  \item O protocolo \textbf{Spanning Tree} opera em modo \texttt{pvst} nos dois
+        comutadores, com uma instância independente por VLAN, prevenindo laços de
+        camada 2 no enlace de agregação.
+\end{itemize}
+
+% ------------------------------------------------------------------ 3
+\section{IMPLEMENTAÇÃO}
+
+\subsection{Base de VLANs e Portas de Acesso}
+
+As quatro VLANs de produção foram criadas de forma idêntica e independente na base de
+dados local de cada comutador, com os nomes \texttt{VENDAS}, \texttt{MARKETING},
+\texttt{ADM} e \texttt{TIC}. Ambos os equipamentos operam com VTP em modo
+\textit{server}. Todas as portas de acesso receberam o comando
+\texttt{switchport mode access} de forma explícita, eliminando a negociação DTP.
+As portas não utilizadas foram desativadas com \texttt{shutdown}.
+
+\subsection{DHCP Distribuído nos Comutadores}
+
+A arquitetura de DHCP adota dois servidores redundantes e complementares, hospedados
+nos próprios comutadores de acesso. Cada switch mantém pools para \textbf{todas as
+VLANs} (1, 10, 20, 30 e 40), mas serve faixas de endereços distintas, evitando
+conflitos mesmo quando ambos respondem ao mesmo pedido:
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{SW0} distribui IPs na faixa \texttt{.10}--\texttt{.50} para VLAN 1
+        e na faixa \texttt{.11}--\texttt{.100} para as VLANs 10 a 40.
+  \item \textbf{SW1} distribui IPs na faixa \texttt{.51}--\texttt{.100} para VLAN 1
+        e na faixa \texttt{.101}--\texttt{.200} para as VLANs 10 a 40.
+\end{itemize}
+
+As exclusões são implementadas com \texttt{ip dhcp excluded-address}, garantindo que
+cada switch ofereça apenas sua metade da faixa disponível. Os endereços de gateway,
+das SVIs e de infraestrutura estão excluídos em ambos os servidores.
+
+\subsection{Relay DHCP no Roteador}
+
+Para que pedidos DHCP originados nas VLANs de produção (10 a 40) cheguem aos
+servidores hospedados nas SVIs dos comutadores (\texttt{192.168.1.1} e
+\texttt{192.168.1.2}), cada subinterface do roteador recebe dois comandos
+\texttt{ip helper-address}:
+
+\begin{itemize}[leftmargin=2em]
+  \item \texttt{ip helper-address 192.168.1.1} --- encaminha para SW0
+  \item \texttt{ip helper-address 192.168.1.2} --- encaminha para SW1
+\end{itemize}
+
+\begin{sloppypar}
+Para que o roteador consiga encaminhar esses pacotes unicast aos endereços das SVIs,
+foi necessário criar a subinterface \texttt{GigabitEthernet2/0.1} com o endereço
+\texttt{192.168.1.254/24}, inserindo a rede \texttt{192.168.1.0/24} na tabela de
+roteamento. Para a VLAN~1, o DHCP funciona sem relay, pois os próprios comutadores
+estão nessa VLAN e respondem diretamente aos broadcasts.
+\end{sloppypar}
+
+\subsection{Subinterfaces do Roteador}
+
+O roteador possui cinco subinterfaces configuradas sobre \texttt{GigabitEthernet2/0}:
+
+\begin{itemize}[leftmargin=2em]
+  \item \texttt{Gi2/0.1}: \texttt{encapsulation dot1Q 1 native},
+        \texttt{192.168.1.254/24} --- gateway e ponto de relay da VLAN 1.
+  \item \texttt{Gi2/0.10}: \texttt{encapsulation dot1Q 10},
+        \texttt{192.168.10.1/24} --- gateway VENDAS + relay DHCP.
+  \item \texttt{Gi2/0.20}: \texttt{encapsulation dot1Q 20},
+        \texttt{192.168.20.254/24} --- gateway MARKETING + relay DHCP.
+  \item \texttt{Gi2/0.30}: \texttt{encapsulation dot1Q 30},
+        \texttt{192.168.30.254/24} --- gateway ADM + relay DHCP.
+  \item \texttt{Gi2/0.40}: \texttt{encapsulation dot1Q 40},
+        \texttt{192.168.40.254/24} --- gateway TIC + relay DHCP.
+\end{itemize}
+
+\subsection{Enlace de Agregação 802.1Q}
+
+Dois enlaces de agregação transportam as VLANs 1, 10, 20, 30 e 40:
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Enlace entre comutadores:} \texttt{GigabitEthernet0/1} de SW0
+        e SW1 (cabo cruzado), garantindo a continuidade dos domínios de broadcast
+        entre as duas caixas de acesso.
+  \item \textbf{Enlace de \textit{uplink}:} \texttt{GigabitEthernet0/2} de SW1
+        até \texttt{GigabitEthernet2/0} do Router0. Todo o tráfego inter-VLAN e
+        o relay DHCP transitam por este enlace.
+\end{itemize}
+
+A porta \texttt{Gi0/2} de SW0 permanece em \texttt{shutdown}.
+
+\subsection{Laptops de Suporte (VLAN 1)}
+
+\begin{sloppypar}
+Os laptops Laptop0 (SW0, Fa0/24) e Laptop5 (SW1, Fa0/24)
+integram a VLAN~1 de gerência. Com endereços obtidos via DHCP na sub-rede
+\texttt{192.168.1.0/24} e gateway \texttt{192.168.1.254}, esses dispositivos
+de suporte técnico alcançam as SVIs de ambos os comutadores
+(\texttt{.1} e \texttt{.2}) e as subinterfaces do roteador, podendo configurar
+qualquer equipamento da infraestrutura por acesso remoto.
+\end{sloppypar}
+
+% ------------------------------------------------------------------ 4
+\section{ANÁLISE DO CENÁRIO}
+
+O cenário implementado é funcional e plenamente operacional para os objetivos
+propostos. A seguir registram-se as observações analíticas relevantes.
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Roteamento inter-VLAN completo.} Todas as cinco subinterfaces
+        do roteador estão configuradas e ativas. Qualquer terminal com IP válido
+        pode alcançar terminais de qualquer outra VLAN, bastando que o \textit{gateway}
+        esteja corretamente configurado.
+
+  \item \textbf{DHCP redundante e sem sobreposição.} A divisão de faixas entre SW0
+        e SW1 garante que dois servidores DHCP possam responder ao mesmo pedido sem
+        conflito de endereços. O host aceita a primeira oferta que chega,
+        independentemente de qual switch respondeu.
+
+  \item \textbf{Relay DHCP dependente da subinterface Gi2/0.1.} O correto
+        funcionamento do relay exige que a rede \texttt{192.168.1.0/24} esteja
+        presente na tabela de roteamento do Router0. A ausência desta subinterface
+        impede o encaminhamento unicast dos pedidos DHCP às SVIs dos comutadores.
+
+  \item \textbf{Servidor sem endereçamento.} O Server0, conectado à
+        \texttt{GigabitEthernet0/0} do roteador, não possui endereço IP
+        e a interface permanece sem endereçamento (\texttt{no ip address}).
+        O segmento de servidores está inoperante.
+
+  \item \textbf{Endurecimento do acesso administrativo pendente.} As linhas
+        \texttt{vty} dos três ativos exigem autenticação (\texttt{login}), mas
+        nenhuma senha foi definida, inviabilizando o acesso remoto por Telnet/SSH.
+        Não há \texttt{enable secret} configurado. A diretiva
+        \texttt{ip default-gateway 192.168.1.254} no SW0 está correta após a
+        adição da subinterface Gi2/0.1 no roteador.
+
+  \item \textbf{Coexistência de dois servidores VTP.} Ambos os comutadores operam
+        em modo \textit{server} com revisões independentes. Recomenda-se adotar
+        o modo \textit{transparent} ou definir um único domínio VTP para evitar
+        sobreposição involuntária das bases de VLANs.
+
+  \item \textbf{Ausência de caminho redundante para o roteador.} A porta
+        \texttt{Gi0/2} de SW0 encontra-se desativada. Todo o tráfego inter-VLAN
+        passa obrigatoriamente pelo enlace SW1~$\rightarrow$~Router0, configurando
+        ponto único de falha. A ativação de \texttt{Gi0/2} em SW0 e a adição de
+        uma segunda subinterface no roteador permitiriam redundância protegida
+        pelo Spanning Tree.
+\end{enumerate}
+
+% ------------------------------------------------------------------ 5
+\section{RESUMO DO CENÁRIO}
+
+\begin{table}[htbp]
+\centering
+\caption{Plano de Endereçamento Global por VLAN}
+\label{tab:enderecamento}
+\small
+\begin{tabular}{@{}clllll@{}}
+\toprule
+\textbf{VLAN} & \textbf{Nome} & \textbf{Rede} & \textbf{Gateway} &
+\textbf{Faixa SW0} & \textbf{Faixa SW1} \\
+\midrule
+1  & Gerência  & 192.168.1.0/24  & 192.168.1.254   & .10–.50   & .51–.100  \\
+10 & VENDAS    & 192.168.10.0/24 & 192.168.10.1    & .11–.100  & .101–.200 \\
+20 & MARKETING & 192.168.20.0/24 & 192.168.20.254  & .11–.100  & .101–.200 \\
+30 & ADM       & 192.168.30.0/24 & 192.168.30.254  & .11–.100  & .101–.200 \\
+40 & TIC       & 192.168.40.0/24 & 192.168.40.254  & .11–.100  & .101–.200 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Alocação de Portas nos Comutadores de Acesso (padrão idêntico em ambos)}
+\label{tab:portas}
+\small
+\begin{tabular}{@{}p{4.0cm}p{2.4cm}p{2.4cm}p{3.8cm}@{}}
+\toprule
+\textbf{Portas} & \textbf{VLAN} & \textbf{Modo} & \textbf{Observação} \\
+\midrule
+Fa0/1 -- Fa0/4              & 10 (VENDAS)    & Access explícito  & PCs e impressoras \\
+Fa0/7 -- Fa0/9              & 20 (MARKETING) & Access explícito  & PCs e notebooks \\
+Fa0/13 -- Fa0/15            & 30 (ADM)       & Access explícito  & PCs e notebooks \\
+Fa0/19 -- Fa0/21            & 40 (TIC)       & Access explícito  & PCs e notebooks \\
+Fa0/24                      & 1 (Gerência)   & Access padrão     & Laptop de suporte \\
+Fa0/5, Fa0/6, Fa0/10--12   & ---            & \texttt{shutdown} & Portas de reserva \\
+Fa0/16--18, Fa0/22--23      & ---            & \texttt{shutdown} & Portas de reserva \\
+Gi0/1                       & 1,10,20,30,40  & \textit{Trunk}    & Enlace inter-switches \\
+Gi0/2 (SW1)                 & 1,10,20,30,40  & \textit{Trunk}    & \textit{Uplink} ao roteador \\
+Gi0/2 (SW0)                 & ---            & \texttt{shutdown} & Porta sem uso \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Subinterfaces do Roteador (Router0)}
+\label{tab:subinterfaces}
+\small
+\begin{tabular}{@{}p{3.8cm}cllp{3.2cm}@{}}
+\toprule
+\textbf{Subinterface} & \textbf{VLAN} & \textbf{Endereço IP} &
+\textbf{Máscara} & \textbf{Função} \\
+\midrule
+GigabitEthernet2/0.1  & 1  & 192.168.1.254   & 255.255.255.0 & Gateway + relay VLAN 1 \\
+GigabitEthernet2/0.10 & 10 & 192.168.10.1    & 255.255.255.0 & Gateway + relay VENDAS \\
+GigabitEthernet2/0.20 & 20 & 192.168.20.254  & 255.255.255.0 & Gateway + relay MARKETING \\
+GigabitEthernet2/0.30 & 30 & 192.168.30.254  & 255.255.255.0 & Gateway + relay ADM \\
+GigabitEthernet2/0.40 & 40 & 192.168.40.254  & 255.255.255.0 & Gateway + relay TIC \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+% ------------------------------------------------------------------ 6
+\section{REFERÊNCIAS}
+
+\begin{itemize}[leftmargin=2em]
+  \item CISCO SYSTEMS. \textit{Cisco Packet Tracer}. Disponível em:
+        \url{https://www.netacad.com/courses/packet-tracer}. Acesso em: setembro. 2026.
+
+  \item IEEE. \textit{IEEE Standard for Local and Metropolitan Area Networks ---
+        Bridges and Bridged Networks (IEEE 802.1Q)}. Nova York: IEEE, 2018.
+
+  \item TANENBAUM, Andrew S.; WETHERALL, David J. \textit{Redes de Computadores}.
+        5. ed. São Paulo: Pearson, 2011.
+
+  \item KUROSE, James F.; ROSS, Keith W. \textit{Redes de Computadores e a Internet:
+        Uma Abordagem Top-Down}. 7. ed. São Paulo: Pearson, 2013.
+
+  \item CISCO NETWORKING ACADEMY. \textit{CCNA: Switching, Routing, and Wireless
+        Essentials}. Cisco Press, 2020.
+\end{itemize}
+
+\end{document}

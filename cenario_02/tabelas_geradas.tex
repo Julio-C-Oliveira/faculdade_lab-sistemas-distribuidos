@@ -1,0 +1,229 @@
+\subsection{Resumo}
+\begingroup\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}p{\dimexpr(\linewidth-8pt)*26/40\relax}p{\dimexpr(\linewidth-8pt)*14/40\relax}@{}}
+\toprule \textbf{Item} & \textbf{Quantidade} \\\midrule\endfirsthead
+\toprule \textbf{Item} & \textbf{Quantidade} \\\midrule\endhead
+Versão do Packet Tracer & 9.0.1.0858 \\
+Roteador(s) & 8 \\
+Switch(s) & 4 \\
+PC(s) & 9 \\
+Enlaces (cabos) & 23 \\
+Sub-redes IPv4 distintas & 14 \\
+Interfaces com IP & 24 \\
+\bottomrule
+\end{longtable}\endgroup
+
+\subsection{Dispositivos}
+\begingroup\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}p{\dimexpr(\linewidth-44pt)*9/101\relax}p{\dimexpr(\linewidth-44pt)*10/101\relax}p{\dimexpr(\linewidth-44pt)*17/101\relax}p{\dimexpr(\linewidth-44pt)*12/101\relax}p{\dimexpr(\linewidth-44pt)*14/101\relax}p{\dimexpr(\linewidth-44pt)*14/101\relax}p{\dimexpr(\linewidth-44pt)*16/101\relax}p{\dimexpr(\linewidth-44pt)*9/101\relax}@{}}
+\toprule \textbf{Nome} & \textbf{Tipo} & \textbf{Modelo} & \textbf{Hostname (config)} & \textbf{Nº de série} & \textbf{Interfaces físicas} & \textbf{Gateway padrão} & \textbf{DNS} \\\midrule\endfirsthead
+\toprule \textbf{Nome} & \textbf{Tipo} & \textbf{Modelo} & \textbf{Hostname (config)} & \textbf{Nº de série} & \textbf{Interfaces físicas} & \textbf{Gateway padrão} & \textbf{DNS} \\\midrule\endhead
+Router0 & Roteador & Router-PT-Empty & R0 & PTT0810HNIR- & 4 & -- & -- \\
+Router1 & Roteador & Router-PT-Empty & R1 & PTT081005M3- & 4 & -- & -- \\
+Router2 & Roteador & Router-PT-Empty & R2 & PTT0810F5B8- & 4 & -- & -- \\
+Router3 & Roteador & Router-PT-Empty & R3 & PTT081027DO- & 4 & -- & -- \\
+Router4 & Roteador & Router-PT-Empty & R4 & PTT0810FAF6- & 2 & -- & -- \\
+Router5 & Roteador & Router-PT-Empty & R5 & PTT08108RO6- & 2 & -- & -- \\
+Router6 & Roteador & Router-PT-Empty & R6 & PTT0810MO36- & 2 & -- & -- \\
+Router7 & Roteador & Router-PT-Empty & R7 & PTT0810B80V- & 2 & -- & -- \\
+Switch0 & Switch & Switch-PT-Empty & Switch & PTT08104TFM- & 4 & -- & -- \\
+Switch1 & Switch & Switch-PT-Empty & Switch & PTT0810PZK1- & 4 & -- & -- \\
+Switch2 & Switch & Switch-PT-Empty & Switch & PTT08105MP4- & 4 & -- & -- \\
+Switch3 & Switch & Switch-PT-Empty & Switch & PTT081018V6- & 4 & -- & -- \\
+PC0 & PC & PC-PT & PC & PTT08108RDE & 1 & 200.168.10.254 & 8.8.8.8 \\
+PC1 & PC & PC-PT & PC & PTT0810M2TB & 1 & 200.168.10.254 & 8.8.8.8 \\
+PC2 & PC & PC-PT & PC & PTT0810O0G0 & 1 & 200.168.40.254 & 8.8.8.8 \\
+PC3 & PC & PC-PT & PC & PTT08101EIH & 1 & 200.168.40.254 & 8.8.8.8 \\
+PC4 & PC & PC-PT & PC & PTT0810B3MA & 1 & 200.168.30.254 & 8.8.8.8 \\
+PC5 & PC & PC-PT & PC & PTT0810N4J4 & 1 & 200.168.30.254 & 8.8.8.8 \\
+PC6 & PC & PC-PT & PC & PTT0810G929 & 1 & 200.168.20.254 & 8.8.8.8 \\
+PC7 & PC & PC-PT & PC & PTT0810VYC9 & 1 & 200.168.20.254 & 8.8.8.8 \\
+PC8 & PC & PC-PT & -- & PTT0810G54E & 1 & 200.168.10.254 & 8.8.8.8 \\
+\bottomrule
+\end{longtable}\endgroup
+
+\subsection{Interfaces de roteadores e SVIs}
+\begingroup\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}p{\dimexpr(\linewidth-56pt)*16/134\relax}p{\dimexpr(\linewidth-56pt)*12/134\relax}p{\dimexpr(\linewidth-56pt)*13/134\relax}p{\dimexpr(\linewidth-56pt)*16/134\relax}p{\dimexpr(\linewidth-56pt)*15/134\relax}p{\dimexpr(\linewidth-56pt)*11/134\relax}p{\dimexpr(\linewidth-56pt)*11/134\relax}p{\dimexpr(\linewidth-56pt)*13/134\relax}p{\dimexpr(\linewidth-56pt)*12/134\relax}p{\dimexpr(\linewidth-56pt)*15/134\relax}@{}}
+\toprule \textbf{Dispositivo} & \textbf{Hostname} & \textbf{Interface} & \textbf{IP} & \textbf{Máscara} & \textbf{Prefixo} & \textbf{Banda} & \textbf{Descrição} & \textbf{Situação} & \textbf{Conectado a} \\\midrule\endfirsthead
+\toprule \textbf{Dispositivo} & \textbf{Hostname} & \textbf{Interface} & \textbf{IP} & \textbf{Máscara} & \textbf{Prefixo} & \textbf{Banda} & \textbf{Descrição} & \textbf{Situação} & \textbf{Conectado a} \\\midrule\endhead
+Router0 & R0 & Se6/0 & 172.30.0.1 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router1 Se6/0 \\
+Router0 & R0 & Se7/0 & 172.20.0.2 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router4 Se0/0 \\
+Router0 & R0 & Se8/0 & 172.100.0.1 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router2 Se9/0 \\
+Router0 & R0 & Se9/0 & 172.90.0.2 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router3 Se9/0 \\
+Router1 & R1 & Se6/0 & 172.30.0.2 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router0 Se6/0 \\
+Router1 & R1 & Se7/0 & 172.50.0.1 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router2 Se7/0 \\
+Router1 & R1 & Se8/0 & 172.110.0.1 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router3 Se7/0 \\
+Router1 & R1 & Se9/0 & 172.40.0.2 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router5 Se0/0 \\
+Router2 & R2 & Se6/0 & 172.60.0.2 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router6 Se0/0 \\
+Router2 & R2 & Se7/0 & 172.50.0.2 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router1 Se7/0 \\
+Router2 & R2 & Se8/0 & 172.70.0.1 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router3 Se8/0 \\
+Router2 & R2 & Se9/0 & 172.100.0.2 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router0 Se8/0 \\
+Router3 & R3 & Se6/0 & 172.80.0.2 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router7 Se0/0 \\
+Router3 & R3 & Se7/0 & 172.110.0.2 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router1 Se8/0 \\
+Router3 & R3 & Se8/0 & 172.70.0.2 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router2 Se8/0 \\
+Router3 & R3 & Se9/0 & 172.90.0.1 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router0 Se9/0 \\
+Router4 & R4 & Gi9/0 & 200.168.10.254 & 255.255.255.0 & /24 & 1 Gb/s & LAN-SiteA & conectada & Switch0 Gi0/1 \\
+Router4 & R4 & Se0/0 & 172.20.0.1 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router0 Se7/0 \\
+Router5 & R5 & Gi9/0 & 200.168.20.254 & 255.255.255.0 & /24 & 1 Gb/s & LAN-SiteC & conectada & Switch1 Gi9/1 \\
+Router5 & R5 & Se0/0 & 172.40.0.1 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router1 Se9/0 \\
+Router6 & R6 & Gi9/0 & 200.168.30.254 & 255.255.255.0 & /24 & 1 Gb/s & LAN-SiteD & conectada & Switch2 Gi9/1 \\
+Router6 & R6 & Se0/0 & 172.60.0.1 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router2 Se6/0 \\
+Router7 & R7 & Gi9/0 & 200.168.40.254 & 255.255.255.0 & /24 & 1 Gb/s & LAN-SiteB & conectada & Switch3 Gi9/1 \\
+Router7 & R7 & Se0/0 & 172.80.0.1 & 255.255.0.0 & /16 & 1544 kb/s & -- & conectada & Router3 Se6/0 \\
+\bottomrule
+\end{longtable}\endgroup
+
+\subsection{Portas de switch}
+\noindent\textit{Modo/VLAN vêm da running-config; porta sem 'switchport' explícito é access na VLAN 1.}\par\smallskip
+\begingroup\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}p{\dimexpr(\linewidth-44pt)*10/84\relax}p{\dimexpr(\linewidth-44pt)*8/84\relax}p{\dimexpr(\linewidth-44pt)*10/84\relax}p{\dimexpr(\linewidth-44pt)*10/84\relax}p{\dimexpr(\linewidth-44pt)*8/84\relax}p{\dimexpr(\linewidth-44pt)*11/84\relax}p{\dimexpr(\linewidth-44pt)*12/84\relax}p{\dimexpr(\linewidth-44pt)*15/84\relax}@{}}
+\toprule \textbf{Switch} & \textbf{Porta} & \textbf{Banda} & \textbf{Duplex} & \textbf{Modo} & \textbf{VLAN(s)} & \textbf{Situação} & \textbf{Conectado a} \\\midrule\endfirsthead
+\toprule \textbf{Switch} & \textbf{Porta} & \textbf{Banda} & \textbf{Duplex} & \textbf{Modo} & \textbf{VLAN(s)} & \textbf{Situação} & \textbf{Conectado a} \\\midrule\endhead
+Switch0 & Gi0/1 & 1 Gb/s & full & access & 1 & conectada & Router4 Gi9/0 \\
+Switch0 & Gi7/1 & 100 Mb/s & full & access & 1 & conectada & PC8 Fa0 \\
+Switch0 & Gi8/1 & 100 Mb/s & full & access & 1 & conectada & PC1 Fa0 \\
+Switch0 & Gi9/1 & 100 Mb/s & full & access & 1 & conectada & PC0 Fa0 \\
+Switch1 & Gi0/1 & 100 Mb/s & full & access & 1 & conectada & PC7 Fa0 \\
+Switch1 & Gi7/1 & 100 Mb/s & full & access & 1 & conectada & PC6 Fa0 \\
+Switch1 & Gi8/1 & 1 Gb/s & half & access & 1 & sem cabo & -- \\
+Switch1 & Gi9/1 & 1 Gb/s & full & access & 1 & conectada & Router5 Gi9/0 \\
+Switch2 & Gi0/1 & 100 Mb/s & full & access & 1 & conectada & PC5 Fa0 \\
+Switch2 & Gi7/1 & 100 Mb/s & full & access & 1 & conectada & PC4 Fa0 \\
+Switch2 & Gi8/1 & 1 Gb/s & half & access & 1 & sem cabo & -- \\
+Switch2 & Gi9/1 & 1 Gb/s & full & access & 1 & conectada & Router6 Gi9/0 \\
+Switch3 & Gi0/1 & 100 Mb/s & full & access & 1 & sem cabo & -- \\
+Switch3 & Gi7/1 & 100 Mb/s & full & access & 1 & conectada & PC3 Fa0 \\
+Switch3 & Gi8/1 & 100 Mb/s & full & access & 1 & conectada & PC2 Fa0 \\
+Switch3 & Gi9/1 & 1 Gb/s & full & access & 1 & conectada & Router7 Gi9/0 \\
+\bottomrule
+\end{longtable}\endgroup
+
+\subsection{Hosts}
+\noindent\textit{IP vazio com endereçamento DHCP: a concessão não é salva no .pkt.}\par\smallskip
+\begingroup\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}p{\dimexpr(\linewidth-44pt)*16/122\relax}p{\dimexpr(\linewidth-44pt)*7/122\relax}p{\dimexpr(\linewidth-44pt)*13/122\relax}p{\dimexpr(\linewidth-44pt)*18/122\relax}p{\dimexpr(\linewidth-44pt)*16/122\relax}p{\dimexpr(\linewidth-44pt)*9/122\relax}p{\dimexpr(\linewidth-44pt)*28/122\relax}p{\dimexpr(\linewidth-44pt)*15/122\relax}@{}}
+\toprule \textbf{Dispositivo} & \textbf{Tipo} & \textbf{Interface} & \textbf{Endereçamento} & \textbf{Gateway} & \textbf{DNS} & \textbf{Rede} & \textbf{Conectado a} \\\midrule\endfirsthead
+\toprule \textbf{Dispositivo} & \textbf{Tipo} & \textbf{Interface} & \textbf{Endereçamento} & \textbf{Gateway} & \textbf{DNS} & \textbf{Rede} & \textbf{Conectado a} \\\midrule\endhead
+PC0 & PC & Fa0 & DHCP & 200.168.10.254 & 8.8.8.8 & 200.168.10.0/24 (inferida) & Switch0 Gi9/1 \\
+PC1 & PC & Fa0 & DHCP & 200.168.10.254 & 8.8.8.8 & 200.168.10.0/24 (inferida) & Switch0 Gi8/1 \\
+PC2 & PC & Fa0 & DHCP & 200.168.40.254 & 8.8.8.8 & 200.168.40.0/24 (inferida) & Switch3 Gi8/1 \\
+PC3 & PC & Fa0 & DHCP & 200.168.40.254 & 8.8.8.8 & 200.168.40.0/24 (inferida) & Switch3 Gi7/1 \\
+PC4 & PC & Fa0 & DHCP & 200.168.30.254 & 8.8.8.8 & 200.168.30.0/24 (inferida) & Switch2 Gi7/1 \\
+PC5 & PC & Fa0 & DHCP & 200.168.30.254 & 8.8.8.8 & 200.168.30.0/24 (inferida) & Switch2 Gi0/1 \\
+PC6 & PC & Fa0 & DHCP & 200.168.20.254 & 8.8.8.8 & 200.168.20.0/24 (inferida) & Switch1 Gi7/1 \\
+PC7 & PC & Fa0 & DHCP & 200.168.20.254 & 8.8.8.8 & 200.168.20.0/24 (inferida) & Switch1 Gi0/1 \\
+PC8 & PC & Fa0 & DHCP & 200.168.10.254 & 8.8.8.8 & 200.168.10.0/24 (inferida) & Switch0 Gi7/1 \\
+\bottomrule
+\end{longtable}\endgroup
+
+\subsection{Enlaces}
+\begingroup\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}p{\dimexpr(\linewidth-32pt)*4/60\relax}p{\dimexpr(\linewidth-32pt)*16/60\relax}p{\dimexpr(\linewidth-32pt)*8/60\relax}p{\dimexpr(\linewidth-32pt)*16/60\relax}p{\dimexpr(\linewidth-32pt)*8/60\relax}p{\dimexpr(\linewidth-32pt)*8/60\relax}@{}}
+\toprule \textbf{\#} & \textbf{Dispositivo A} & \textbf{Porta A} & \textbf{Dispositivo B} & \textbf{Porta B} & \textbf{Cabo} \\\midrule\endfirsthead
+\toprule \textbf{\#} & \textbf{Dispositivo A} & \textbf{Porta A} & \textbf{Dispositivo B} & \textbf{Porta B} & \textbf{Cabo} \\\midrule\endhead
+1 & PC3 & Fa0 & Switch3 & Gi7/1 & Direto \\
+2 & PC8 & Fa0 & Switch0 & Gi7/1 & Direto \\
+3 & Router0 & Se6/0 & Router1 & Se6/0 & Serial \\
+4 & Router0 & Se7/0 & Router4 & Se0/0 & Serial \\
+5 & Router0 & Se8/0 & Router2 & Se9/0 & Serial \\
+6 & Router1 & Se7/0 & Router2 & Se7/0 & Serial \\
+7 & Router1 & Se9/0 & Router5 & Se0/0 & Serial \\
+8 & Router2 & Se6/0 & Router6 & Se0/0 & Serial \\
+9 & Router2 & Se8/0 & Router3 & Se8/0 & Serial \\
+10 & Router3 & Se7/0 & Router1 & Se8/0 & Serial \\
+11 & Router3 & Se9/0 & Router0 & Se9/0 & Serial \\
+12 & Router5 & Gi9/0 & Switch1 & Gi9/1 & Direto \\
+13 & Router6 & Gi9/0 & Switch2 & Gi9/1 & Direto \\
+14 & Router7 & Se0/0 & Router3 & Se6/0 & Serial \\
+15 & Switch0 & Gi0/1 & Router4 & Gi9/0 & Direto \\
+16 & Switch0 & Gi8/1 & PC1 & Fa0 & Direto \\
+17 & Switch0 & Gi9/1 & PC0 & Fa0 & Direto \\
+18 & Switch1 & Gi0/1 & PC7 & Fa0 & Direto \\
+19 & Switch1 & Gi7/1 & PC6 & Fa0 & Direto \\
+20 & Switch2 & Gi0/1 & PC5 & Fa0 & Direto \\
+21 & Switch2 & Gi7/1 & PC4 & Fa0 & Direto \\
+22 & Switch3 & Gi8/1 & PC2 & Fa0 & Direto \\
+23 & Switch3 & Gi9/1 & Router7 & Gi9/0 & Direto \\
+\bottomrule
+\end{longtable}\endgroup
+
+\subsection{Sub-redes}
+\begingroup\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}p{\dimexpr(\linewidth-20pt)*17/92\relax}p{\dimexpr(\linewidth-20pt)*15/92\relax}p{\dimexpr(\linewidth-20pt)*30/92\relax}p{\dimexpr(\linewidth-20pt)*30/92\relax}@{}}
+\toprule \textbf{Rede} & \textbf{Máscara} & \textbf{Faixa de hosts} & \textbf{Interfaces (dispositivo interface – IP)} \\\midrule\endfirsthead
+\toprule \textbf{Rede} & \textbf{Máscara} & \textbf{Faixa de hosts} & \textbf{Interfaces (dispositivo interface – IP)} \\\midrule\endhead
+172.20.0.0/16 & 255.255.0.0 & 172.20.0.1 – 172.20.255.254 & Router0 Se7/0 – 172.20.0.2; Router4 Se0/0 – 172.20.0.1 \\
+172.30.0.0/16 & 255.255.0.0 & 172.30.0.1 – 172.30.255.254 & Router0 Se6/0 – 172.30.0.1; Router1 Se6/0 – 172.30.0.2 \\
+172.40.0.0/16 & 255.255.0.0 & 172.40.0.1 – 172.40.255.254 & Router1 Se9/0 – 172.40.0.2; Router5 Se0/0 – 172.40.0.1 \\
+172.50.0.0/16 & 255.255.0.0 & 172.50.0.1 – 172.50.255.254 & Router1 Se7/0 – 172.50.0.1; Router2 Se7/0 – 172.50.0.2 \\
+172.60.0.0/16 & 255.255.0.0 & 172.60.0.1 – 172.60.255.254 & Router2 Se6/0 – 172.60.0.2; Router6 Se0/0 – 172.60.0.1 \\
+172.70.0.0/16 & 255.255.0.0 & 172.70.0.1 – 172.70.255.254 & Router2 Se8/0 – 172.70.0.1; Router3 Se8/0 – 172.70.0.2 \\
+172.80.0.0/16 & 255.255.0.0 & 172.80.0.1 – 172.80.255.254 & Router3 Se6/0 – 172.80.0.2; Router7 Se0/0 – 172.80.0.1 \\
+172.90.0.0/16 & 255.255.0.0 & 172.90.0.1 – 172.90.255.254 & Router0 Se9/0 – 172.90.0.2; Router3 Se9/0 – 172.90.0.1 \\
+172.100.0.0/16 & 255.255.0.0 & 172.100.0.1 – 172.100.255.254 & Router0 Se8/0 – 172.100.0.1; Router2 Se9/0 – 172.100.0.2 \\
+172.110.0.0/16 & 255.255.0.0 & 172.110.0.1 – 172.110.255.254 & Router1 Se8/0 – 172.110.0.1; Router3 Se7/0 – 172.110.0.2 \\
+200.168.10.0/24 & 255.255.255.0 & 200.168.10.1 – 200.168.10.254 & Router4 Gi9/0 – 200.168.10.254 \\
+200.168.20.0/24 & 255.255.255.0 & 200.168.20.1 – 200.168.20.254 & Router5 Gi9/0 – 200.168.20.254 \\
+200.168.30.0/24 & 255.255.255.0 & 200.168.30.1 – 200.168.30.254 & Router6 Gi9/0 – 200.168.30.254 \\
+200.168.40.0/24 & 255.255.255.0 & 200.168.40.1 – 200.168.40.254 & Router7 Gi9/0 – 200.168.40.254 \\
+\bottomrule
+\end{longtable}\endgroup
+
+\subsection{VLANs}
+\noindent\textit{Portas em shutdown e trunks não entram na lista de portas access.}\par\smallskip
+\begingroup\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}p{\dimexpr(\linewidth-20pt)*10/54\relax}p{\dimexpr(\linewidth-20pt)*7/54\relax}p{\dimexpr(\linewidth-20pt)*9/54\relax}p{\dimexpr(\linewidth-20pt)*28/54\relax}@{}}
+\toprule \textbf{Switch} & \textbf{VLAN} & \textbf{Nome} & \textbf{Portas access} \\\midrule\endfirsthead
+\toprule \textbf{Switch} & \textbf{VLAN} & \textbf{Nome} & \textbf{Portas access} \\\midrule\endhead
+Switch0 & 1 & default & Gi0/1, Gi7/1, Gi8/1, Gi9/1 \\
+Switch1 & 1 & default & Gi0/1, Gi7/1, Gi8/1, Gi9/1 \\
+Switch2 & 1 & default & Gi0/1, Gi7/1, Gi8/1, Gi9/1 \\
+Switch3 & 1 & default & Gi0/1, Gi7/1, Gi8/1, Gi9/1 \\
+\bottomrule
+\end{longtable}\endgroup
+
+\subsection{Protocolos de roteamento}
+\begingroup\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}p{\dimexpr(\linewidth-26pt)*16/86\relax}p{\dimexpr(\linewidth-26pt)*13/86\relax}p{\dimexpr(\linewidth-26pt)*13/86\relax}p{\dimexpr(\linewidth-26pt)*30/86\relax}p{\dimexpr(\linewidth-26pt)*14/86\relax}@{}}
+\toprule \textbf{Dispositivo} & \textbf{Protocolo} & \textbf{Router-ID} & \textbf{Redes anunciadas} & \textbf{Interfaces passivas} \\\midrule\endfirsthead
+\toprule \textbf{Dispositivo} & \textbf{Protocolo} & \textbf{Router-ID} & \textbf{Redes anunciadas} & \textbf{Interfaces passivas} \\\midrule\endhead
+Router0 & ospf 1 & 1.1.1.1 & 172.0.0.0/8 (área 0) & -- \\
+Router0 & rip & -- & 172.20.0.0; 172.30.0.0; 172.90.0.0; 172.100.0.0 & -- \\
+Router1 & ospf 1 & 2.2.2.2 & 172.0.0.0/8 (área 0) & -- \\
+Router1 & rip & -- & 172.30.0.0; 172.40.0.0; 172.50.0.0; 172.110.0.0 & -- \\
+Router2 & ospf 1 & 3.3.3.3 & 172.0.0.0/8 (área 0) & -- \\
+Router2 & rip & -- & 172.50.0.0; 172.60.0.0; 172.70.0.0; 172.100.0.0 & -- \\
+Router3 & ospf 1 & 4.4.4.4 & 172.0.0.0/8 (área 0) & -- \\
+Router3 & rip & -- & 172.70.0.0; 172.80.0.0; 172.90.0.0; 172.110.0.0 & -- \\
+Router4 & ospf 1 & 5.5.5.5 & 172.0.0.0/8 (área 0); 200.168.10.0/24 (área 0) & Gi9/0 \\
+Router4 & rip & -- & 172.20.0.0; 200.168.10.0 & -- \\
+Router5 & ospf 1 & 6.6.6.6 & 172.0.0.0/8 (área 0); 200.168.20.0/24 (área 0) & Gi9/0 \\
+Router5 & rip & -- & 172.40.0.0; 200.168.20.0 & -- \\
+Router6 & ospf 1 & 7.7.7.7 & 172.0.0.0/8 (área 0); 200.168.30.0/24 (área 0) & Gi9/0 \\
+Router6 & rip & -- & 172.60.0.0; 200.168.30.0 & -- \\
+Router7 & ospf 1 & 8.8.8.8 & 172.0.0.0/8 (área 0); 200.168.40.0/24 (área 0) & Gi9/0 \\
+Router7 & rip & -- & 170.80.0.0; 200.168.40.0 & -- \\
+\bottomrule
+\end{longtable}\endgroup
+
+\subsection{Pools DHCP (roteadores)}
+\begingroup\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}p{\dimexpr(\linewidth-32pt)*16/118\relax}p{\dimexpr(\linewidth-32pt)*17/118\relax}p{\dimexpr(\linewidth-32pt)*30/118\relax}p{\dimexpr(\linewidth-32pt)*16/118\relax}p{\dimexpr(\linewidth-32pt)*9/118\relax}p{\dimexpr(\linewidth-32pt)*30/118\relax}@{}}
+\toprule \textbf{Dispositivo} & \textbf{Pool} & \textbf{Rede / máscara} & \textbf{Gateway} & \textbf{DNS} & \textbf{Endereços excluídos} \\\midrule\endfirsthead
+\toprule \textbf{Dispositivo} & \textbf{Pool} & \textbf{Rede / máscara} & \textbf{Gateway} & \textbf{DNS} & \textbf{Endereços excluídos} \\\midrule\endhead
+Router4 & REDE\_LOCAL\_10 & 200.168.10.0 / 255.255.255.0 & 200.168.10.254 & 8.8.8.8 & 200.168.10.1; 200.168.10.2; 200.168.10.3; 200.168.10.254; 200.168.10.1 – 200.168.10.3 \\
+Router5 & REDE\_LOCAL\_20 & 200.168.20.0 / 255.255.255.0 & 200.168.20.254 & 8.8.8.8 & 200.168.20.254 \\
+Router6 & REDE\_LOCAL\_30 & 200.168.30.0 / 255.255.255.0 & 200.168.30.254 & 8.8.8.8 & 200.168.30.254 \\
+Router7 & REDE\_LOCAL\_40 & 200.168.40.0 / 255.255.255.0 & 200.168.40.254 & 8.8.8.8 & 200.168.40.254 \\
+\bottomrule
+\end{longtable}\endgroup
+
+\subsection{Verificações}
+\begingroup\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}p{\dimexpr(\linewidth-8pt)*3/33\relax}p{\dimexpr(\linewidth-8pt)*30/33\relax}@{}}
+\toprule \textbf{\#} & \textbf{Observação} \\\midrule\endfirsthead
+\toprule \textbf{\#} & \textbf{Observação} \\\midrule\endhead
+1 & Router7: router rip anuncia '170.80.0.0', que não contém nenhuma interface do equipamento. \\
+\bottomrule
+\end{longtable}\endgroup

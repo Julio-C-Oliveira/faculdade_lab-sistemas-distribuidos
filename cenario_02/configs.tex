@@ -1,0 +1,188 @@
+\subsection*{R0 (Router0)}
+\begin{lstlisting}
+hostname R0
+interface Serial6/0
+ip address 172.30.0.1 255.255.0.0
+interface Serial7/0
+ip address 172.20.0.2 255.255.0.0
+interface Serial8/0
+ip address 172.100.0.1 255.255.0.0
+interface Serial9/0
+ip address 172.90.0.2 255.255.0.0
+router ospf 1
+router-id 1.1.1.1
+log-adjacency-changes
+network 172.0.0.0 0.255.255.255 area 0
+router rip
+network 172.20.0.0
+network 172.30.0.0
+network 172.90.0.0
+network 172.100.0.0
+\end{lstlisting}
+\subsection*{R1 (Router1)}
+\begin{lstlisting}
+hostname R1
+interface Serial6/0
+ip address 172.30.0.2 255.255.0.0
+interface Serial7/0
+ip address 172.50.0.1 255.255.0.0
+interface Serial8/0
+ip address 172.110.0.1 255.255.0.0
+interface Serial9/0
+ip address 172.40.0.2 255.255.0.0
+router ospf 1
+router-id 2.2.2.2
+log-adjacency-changes
+network 172.0.0.0 0.255.255.255 area 0
+router rip
+network 172.30.0.0
+network 172.40.0.0
+network 172.50.0.0
+network 172.110.0.0
+\end{lstlisting}
+\subsection*{R2 (Router2)}
+\begin{lstlisting}
+hostname R2
+interface Serial6/0
+ip address 172.60.0.2 255.255.0.0
+interface Serial7/0
+ip address 172.50.0.2 255.255.0.0
+interface Serial8/0
+ip address 172.70.0.1 255.255.0.0
+interface Serial9/0
+ip address 172.100.0.2 255.255.0.0
+router ospf 1
+router-id 3.3.3.3
+log-adjacency-changes
+network 172.0.0.0 0.255.255.255 area 0
+router rip
+network 172.50.0.0
+network 172.60.0.0
+network 172.70.0.0
+network 172.100.0.0
+\end{lstlisting}
+\subsection*{R3 (Router3)}
+\begin{lstlisting}
+hostname R3
+interface Serial6/0
+ip address 172.80.0.2 255.255.0.0
+interface Serial7/0
+ip address 172.110.0.2 255.255.0.0
+interface Serial8/0
+ip address 172.70.0.2 255.255.0.0
+interface Serial9/0
+ip address 172.90.0.1 255.255.0.0
+router ospf 1
+router-id 4.4.4.4
+log-adjacency-changes
+network 172.0.0.0 0.255.255.255 area 0
+router rip
+network 172.70.0.0
+network 172.80.0.0
+network 172.90.0.0
+network 172.110.0.0
+\end{lstlisting}
+\subsection*{R4 (Router4)}
+\begin{lstlisting}
+hostname R4
+ip dhcp excluded-address 200.168.10.1
+ip dhcp excluded-address 200.168.10.2
+ip dhcp excluded-address 200.168.10.3
+ip dhcp excluded-address 200.168.10.254
+ip dhcp excluded-address 200.168.10.1 200.168.10.3
+ip dhcp pool REDE_LOCAL_10
+network 200.168.10.0 255.255.255.0
+default-router 200.168.10.254
+dns-server 8.8.8.8
+interface Serial0/0
+ip address 172.20.0.1 255.255.0.0
+interface GigabitEthernet9/0
+description LAN-SiteA
+ip address 200.168.10.254 255.255.255.0
+duplex auto
+speed auto
+router ospf 1
+router-id 5.5.5.5
+log-adjacency-changes
+passive-interface GigabitEthernet9/0
+network 172.0.0.0 0.255.255.255 area 0
+network 200.168.10.0 0.0.0.255 area 0
+router rip
+network 172.20.0.0
+network 200.168.10.0
+\end{lstlisting}
+\subsection*{R5 (Router5)}
+\begin{lstlisting}
+hostname R5
+ip dhcp excluded-address 200.168.20.254
+ip dhcp pool REDE_LOCAL_20
+network 200.168.20.0 255.255.255.0
+default-router 200.168.20.254
+dns-server 8.8.8.8
+interface Serial0/0
+ip address 172.40.0.1 255.255.0.0
+interface GigabitEthernet9/0
+description LAN-SiteC
+ip address 200.168.20.254 255.255.255.0
+duplex auto
+speed auto
+router ospf 1
+router-id 6.6.6.6
+log-adjacency-changes
+passive-interface GigabitEthernet9/0
+network 172.0.0.0 0.255.255.255 area 0
+network 200.168.20.0 0.0.0.255 area 0
+router rip
+network 172.40.0.0
+network 200.168.20.0
+\end{lstlisting}
+\subsection*{R6 (Router6)}
+\begin{lstlisting}
+hostname R6
+ip dhcp excluded-address 200.168.30.254
+ip dhcp pool REDE_LOCAL_30
+network 200.168.30.0 255.255.255.0
+default-router 200.168.30.254
+dns-server 8.8.8.8
+interface Serial0/0
+ip address 172.60.0.1 255.255.0.0
+interface GigabitEthernet9/0
+description LAN-SiteD
+ip address 200.168.30.254 255.255.255.0
+duplex auto
+speed auto
+router ospf 1
+router-id 7.7.7.7
+log-adjacency-changes
+passive-interface GigabitEthernet9/0
+network 172.0.0.0 0.255.255.255 area 0
+network 200.168.30.0 0.0.0.255 area 0
+router rip
+network 172.60.0.0
+network 200.168.30.0
+\end{lstlisting}
+\subsection*{R7 (Router7)}
+\begin{lstlisting}
+hostname R7
+ip dhcp excluded-address 200.168.40.254
+ip dhcp pool REDE_LOCAL_40
+network 200.168.40.0 255.255.255.0
+default-router 200.168.40.254
+dns-server 8.8.8.8
+interface Serial0/0
+ip address 172.80.0.1 255.255.0.0
+interface GigabitEthernet9/0
+description LAN-SiteB
+ip address 200.168.40.254 255.255.255.0
+duplex auto
+speed auto
+router ospf 1
+router-id 8.8.8.8
+log-adjacency-changes
+passive-interface GigabitEthernet9/0
+network 172.0.0.0 0.255.255.255 area 0
+network 200.168.40.0 0.0.0.255 area 0
+router rip
+network 170.80.0.0
+network 200.168.40.0
+\end{lstlisting}
