@@ -4,10 +4,10 @@
 
 A infraestrutura é constituída por 22 dispositivos interconectados através de 23 enlaces:
 \begin{itemize}[leftmargin=2em]
-  \item \textbf{Núcleo WAN (R0 a R3):} 4 roteadores modelo \textit{Router-PT-Empty} equipados com módulos seriais inteligentes (\texttt{PT-ROUTER-NM-1SS}), formando uma topologia de malha completa com 6 enlaces seriais.
+  \item \textbf{Núcleo WAN (R0 a R3):} 4 roteadores modelo \textit{Router-PT-Empty} equipados com módulos seriais inteligentes (\texttt{PT-ROUTER-NM-1SS}), formando uma topologia de malha completa (\textit{full-mesh}) com 6 enlaces seriais ponto a ponto.
   \item \textbf{Roteadores de Borda (R4 a R7):} 4 roteadores de borda responsáveis pelo atendimento das LANs departamentais, cada um conectado por enlace serial a um roteador de núcleo específico e por interface GigabitEthernet ao respectivo switch de acesso.
-  \item \textbf{Comutadores de Acesso (Switch0 a Switch3):} 4 switches modelo \textit{Switch-PT-Empty} com portas GigabitEthernet interligando as estações de trabalho.
-  \item \textbf{Estações Finais (PC0 a PC8):} 9 computadores com conectividade FastEthernet recebendo endereçamento na faixa de suas respectivas sub-redes.
+  \item \textbf{Comutadores de Acesso (Switch0 a Switch3):} 4 switches modelo \textit{Switch-PT-Empty} com portas GigabitEthernet interligando as estações de trabalho e os roteadores de borda.
+  \item \textbf{Estações Finais (PC0 a PC8):} 9 computadores com conectividade FastEthernet recebendo endereçamento dinâmico via pools DHCP configurados nos roteadores de borda.
 \end{itemize}
 
 \begin{figure}[H]
@@ -19,7 +19,7 @@ A infraestrutura é constituída por 22 dispositivos interconectados através de
 
 \subsection{Interfaces e Endereçamento de Roteadores}
 
-A Tabela~\ref{tab:ifaces} detalha a distribuição das interfaces de roteamento, endereços IPv4 e larguras de banda atribuídas aos enlaces.
+A Tabela~\ref{tab:ifaces} detalha a distribuição das 24 interfaces de roteamento ativas, seus endereços IPv4, máscaras e larguras de banda atribuídas aos enlaces.
 
 \begin{table}[H]
 \centering
@@ -31,7 +31,7 @@ A Tabela~\ref{tab:ifaces} detalha a distribuição das interfaces de roteamento,
 
 \subsection{Portas de Switch e Estações de Trabalho}
 
-A Tabela~\ref{tab:switchports} resume a ocupação de portas nos switches de acesso, e a Tabela~\ref{tab:pcs} apresenta os computadores e seus respectivos switches.
+A Tabela~\ref{tab:switchports} resume a ocupação de portas nos switches de acesso, e a Tabela~\ref{tab:pcs} apresenta as estações de trabalho conectadas a cada equipamento.
 
 \begin{table}[H]
 \centering
@@ -51,10 +51,16 @@ A Tabela~\ref{tab:switchports} resume a ocupação de portas nos switches de ace
 
 \section{ROTEAMENTO DINÂMICO E TABELA RIB}
 
-O roteamento da infraestrutura baseia-se no protocolo OSPF processo 1 operando em área única (\textit{Area 0}). O custo OSPF dos enlaces seriais é determinado por $\lfloor 10^8 / bw_{bps} \rfloor$, resultando no custo métrico padrão de 64 para links seriais T1 (1544 kb/s), e custo 1 para interfaces GigabitEthernet locais.
+O roteamento da infraestrutura baseia-se exclusivamente no protocolo OSPF processo 1 operando em área única (\textit{Area 0}). O custo OSPF dos enlaces seriais é determinado pela relação $\lfloor 10^8 / bw_{bps} \rfloor$, resultando no custo métrico padrão de 64 para links seriais T1 (1544 kb/s), e custo 1 para interfaces locais GigabitEthernet. As interfaces LAN dos roteadores de borda são configuradas como \texttt{passive-interface} para conter o tráfego de controle desnecessário nas redes de acesso.
 
 \subsection{Base de Informações de Roteamento (RIB)}
 
 A seguir são apresentadas as entradas calculadas da RIB esperada para os roteadores da topologia:
 
 \input{sections/tabelas/rib.tex}
+
+\subsection{Configurações dos Roteadores (Running-Configs)}
+
+A listagem a seguir apresenta as configurações essenciais extraídas diretamente dos dispositivos no arquivo Packet Tracer, compreendendo os endereçamentos, escopos DHCP locais e parâmetros OSPF:
+
+\input{sections/tabelas/configs.tex}
