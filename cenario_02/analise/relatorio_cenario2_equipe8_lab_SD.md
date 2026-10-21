@@ -1,6 +1,6 @@
-# Relatório de rede — cenario2_equipe8_lab_SD
+# Relatório de rede — cenario_02_equipe_08_Lab_SD
 
-Origem: `cenario2_equipe8_lab_SD.xml` · Packet Tracer 9.0.1.0858 · gerado em 14/10/2026 18:44
+Origem: `cenario_02_equipe_08_Lab_SD.xml` · Packet Tracer 9.0.1.0858 · gerado em 21/10/2026 11:37
 
 ### Resumo
 
@@ -38,7 +38,8 @@ Origem: `cenario2_equipe8_lab_SD.xml` · Packet Tracer 9.0.1.0858 · gerado em 1
 | PC5 | PC | PC-PT | PC | PTT0810N4J4 | 1 | 200.168.30.254 | 8.8.8.8 |
 | PC6 | PC | PC-PT | PC | PTT0810G929 | 1 | 200.168.20.254 | 8.8.8.8 |
 | PC7 | PC | PC-PT | PC | PTT0810VYC9 | 1 | 200.168.20.254 | 8.8.8.8 |
-| PC8 | PC | PC-PT | — | PTT0810G54E | 1 | 200.168.10.254 | 8.8.8.8 |
+| PC8 | PC | PC-PT | PC | PTT0810G54E | 1 | 200.168.10.254 | 8.8.8.8 |
+| Power Distribution Device0 | Power Distribution Device | 2Power | — | PTT08109980 | 0 | — | — |
 
 ### Interfaces de roteadores e SVIs
 
@@ -112,29 +113,29 @@ _IP vazio com endereçamento DHCP: a concessão não é salva no .pkt._
 
 | # | Dispositivo A | Porta A | Dispositivo B | Porta B | Cabo |
 |---|---|---|---|---|---|
-| 1 | PC3 | FastEthernet0 | Switch3 | GigabitEthernet7/1 | Direto |
-| 2 | PC8 | FastEthernet0 | Switch0 | GigabitEthernet7/1 | Direto |
-| 3 | Router0 | Serial6/0 | Router1 | Serial6/0 | Serial |
-| 4 | Router0 | Serial7/0 | Router4 | Serial0/0 | Serial |
-| 5 | Router0 | Serial8/0 | Router2 | Serial9/0 | Serial |
-| 6 | Router1 | Serial7/0 | Router2 | Serial7/0 | Serial |
-| 7 | Router1 | Serial9/0 | Router5 | Serial0/0 | Serial |
-| 8 | Router2 | Serial6/0 | Router6 | Serial0/0 | Serial |
-| 9 | Router2 | Serial8/0 | Router3 | Serial8/0 | Serial |
-| 10 | Router3 | Serial7/0 | Router1 | Serial8/0 | Serial |
-| 11 | Router3 | Serial9/0 | Router0 | Serial9/0 | Serial |
-| 12 | Router5 | GigabitEthernet9/0 | Switch1 | GigabitEthernet9/1 | Direto |
-| 13 | Router6 | GigabitEthernet9/0 | Switch2 | GigabitEthernet9/1 | Direto |
-| 14 | Router7 | Serial0/0 | Router3 | Serial6/0 | Serial |
-| 15 | Switch0 | GigabitEthernet0/1 | Router4 | GigabitEthernet9/0 | Direto |
-| 16 | Switch0 | GigabitEthernet8/1 | PC1 | FastEthernet0 | Direto |
+| 1 | Switch0 | GigabitEthernet0/1 | Router4 | GigabitEthernet9/0 | Direto |
+| 2 | Switch3 | GigabitEthernet9/1 | Router7 | GigabitEthernet9/0 | Direto |
+| 3 | Router6 | GigabitEthernet9/0 | Switch2 | GigabitEthernet9/1 | Direto |
+| 4 | Router5 | GigabitEthernet9/0 | Switch1 | GigabitEthernet9/1 | Direto |
+| 5 | Router0 | Serial7/0 | Router4 | Serial0/0 | Serial |
+| 6 | Router0 | Serial6/0 | Router1 | Serial6/0 | Serial |
+| 7 | Router1 | Serial7/0 | Router2 | Serial7/0 | Serial |
+| 8 | Router2 | Serial8/0 | Router3 | Serial8/0 | Serial |
+| 9 | Router3 | Serial9/0 | Router0 | Serial9/0 | Serial |
+| 10 | Router0 | Serial8/0 | Router2 | Serial9/0 | Serial |
+| 11 | Router3 | Serial7/0 | Router1 | Serial8/0 | Serial |
+| 12 | Router7 | Serial0/0 | Router3 | Serial6/0 | Serial |
+| 13 | Router1 | Serial9/0 | Router5 | Serial0/0 | Serial |
+| 14 | Router2 | Serial6/0 | Router6 | Serial0/0 | Serial |
+| 15 | Switch3 | GigabitEthernet8/1 | PC2 | FastEthernet0 | Direto |
+| 16 | PC3 | FastEthernet0 | Switch3 | GigabitEthernet7/1 | Direto |
 | 17 | Switch0 | GigabitEthernet9/1 | PC0 | FastEthernet0 | Direto |
-| 18 | Switch1 | GigabitEthernet0/1 | PC7 | FastEthernet0 | Direto |
-| 19 | Switch1 | GigabitEthernet7/1 | PC6 | FastEthernet0 | Direto |
-| 20 | Switch2 | GigabitEthernet0/1 | PC5 | FastEthernet0 | Direto |
-| 21 | Switch2 | GigabitEthernet7/1 | PC4 | FastEthernet0 | Direto |
-| 22 | Switch3 | GigabitEthernet8/1 | PC2 | FastEthernet0 | Direto |
-| 23 | Switch3 | GigabitEthernet9/1 | Router7 | GigabitEthernet9/0 | Direto |
+| 18 | Switch0 | GigabitEthernet8/1 | PC1 | FastEthernet0 | Direto |
+| 19 | PC8 | FastEthernet0 | Switch0 | GigabitEthernet7/1 | Direto |
+| 20 | Switch1 | GigabitEthernet0/1 | PC7 | FastEthernet0 | Direto |
+| 21 | Switch1 | GigabitEthernet7/1 | PC6 | FastEthernet0 | Direto |
+| 22 | Switch2 | GigabitEthernet0/1 | PC5 | FastEthernet0 | Direto |
+| 23 | Switch2 | GigabitEthernet7/1 | PC4 | FastEthernet0 | Direto |
 
 ### Sub-redes
 
@@ -171,21 +172,13 @@ _Portas em shutdown e trunks não entram na lista de portas access._
 | Dispositivo | Protocolo | Router-ID | Redes anunciadas | Interfaces passivas |
 |---|---|---|---|---|
 | Router0 | ospf 1 | 1.1.1.1 | 172.0.0.0/8 (área 0) | — |
-| Router0 | rip | — | 172.20.0.0; 172.30.0.0; 172.90.0.0; 172.100.0.0 | — |
 | Router1 | ospf 1 | 2.2.2.2 | 172.0.0.0/8 (área 0) | — |
-| Router1 | rip | — | 172.30.0.0; 172.40.0.0; 172.50.0.0; 172.110.0.0 | — |
 | Router2 | ospf 1 | 3.3.3.3 | 172.0.0.0/8 (área 0) | — |
-| Router2 | rip | — | 172.50.0.0; 172.60.0.0; 172.70.0.0; 172.100.0.0 | — |
 | Router3 | ospf 1 | 4.4.4.4 | 172.0.0.0/8 (área 0) | — |
-| Router3 | rip | — | 172.70.0.0; 172.80.0.0; 172.90.0.0; 172.110.0.0 | — |
 | Router4 | ospf 1 | 5.5.5.5 | 172.0.0.0/8 (área 0); 200.168.10.0/24 (área 0) | Gi9/0 |
-| Router4 | rip | — | 172.20.0.0; 200.168.10.0 | — |
 | Router5 | ospf 1 | 6.6.6.6 | 172.0.0.0/8 (área 0); 200.168.20.0/24 (área 0) | Gi9/0 |
-| Router5 | rip | — | 172.40.0.0; 200.168.20.0 | — |
 | Router6 | ospf 1 | 7.7.7.7 | 172.0.0.0/8 (área 0); 200.168.30.0/24 (área 0) | Gi9/0 |
-| Router6 | rip | — | 172.60.0.0; 200.168.30.0 | — |
 | Router7 | ospf 1 | 8.8.8.8 | 172.0.0.0/8 (área 0); 200.168.40.0/24 (área 0) | Gi9/0 |
-| Router7 | rip | — | 170.80.0.0; 200.168.40.0 | — |
 
 ### Pools DHCP (roteadores)
 
@@ -195,9 +188,3 @@ _Portas em shutdown e trunks não entram na lista de portas access._
 | Router5 | REDE_LOCAL_20 | 200.168.20.0 / 255.255.255.0 | 200.168.20.254 | 8.8.8.8 | 200.168.20.254 |
 | Router6 | REDE_LOCAL_30 | 200.168.30.0 / 255.255.255.0 | 200.168.30.254 | 8.8.8.8 | 200.168.30.254 |
 | Router7 | REDE_LOCAL_40 | 200.168.40.0 / 255.255.255.0 | 200.168.40.254 | 8.8.8.8 | 200.168.40.254 |
-
-### Verificações
-
-| # | Observação |
-|---|---|
-| 1 | Router7: router rip anuncia '170.80.0.0', que não contém nenhuma interface do equipamento. |
