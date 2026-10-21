@@ -41,28 +41,28 @@ python3 .agents/skills/novo-cenario-sd/scripts/process_cenario.py --cenario XX
 ```
 
 O script realiza automaticamente:
-1. **Descoberta do arquivo em `archives/`**: Localiza pacotes (`.tar.xz`, `.zip`, `.tar.gz`) ou arquivos `.pkt` referentes ao cenário `XX`.
+1. **Descoberta de todos os arquivos em `archives/`**: Localiza pacotes (`.tar.xz`, `.zip`, `.tar.gz`) e/ou arquivos `.pkt` referentes ao cenário `XX` (modo híbrido: extrai tanto artefatos pré-gerados do pacote quanto o `.pkt`).
 2. **Criação da árvore simétrica**:
    - `cenario_XX/packet_tracer/`
    - `cenario_XX/relatorio/{pics,sections/tabelas,template}/`
    - `cenario_XX/analise/`
    - `cenario_XX/entregas/`
-3. **Cópia de assets oficiais**: Copia `Logo_UFPA.png` e `sbc.bst` de `cenario_01/relatorio/`.
+3. **Cópia de assets oficiais**: Copia `Logo_UFPA.png`, `sbc.bst` e arquivos base (`references.tex`, `references.bib`, `conclusion.tex`, `appendix.tex`) de `cenario_01/relatorio/`.
 4. **Padronização e Decodificação do `.pkt`**:
    - Copia/renomeia o `.pkt` para `cenario_XX/packet_tracer/cenario_XX_equipe_08_Lab_SD.pkt`.
    - Invoca `tools/decrypt_pkt_9-0-0.py` gerando `cenario_XX_equipe_08_Lab_SD.xml`.
-   - **Se nenhum `.pkt` for encontrado**: prepara toda a estrutura a partir dos arquivos disponíveis no pacote e avisa que falta o `.pkt` para fechar o `.zip` final.
+   - **Se nenhum `.pkt` for encontrado**: monta toda a estrutura (`main.tex`, `introduction.tex`, `body.tex`, `sections/tabelas/`, `README.md`) a partir dos arquivos disponíveis no pacote e avisa que falta apenas o `.pkt` para fechar o `.zip` final.
 5. **Extração e Auditoria tendo o `.xml` como Fonte da Verdade Absoluta**:
-   - Extrai todos os dispositivos, modelos, enlaces (`LINKS`), interfaces com IP, portas de switch, PCs e `RUNNINGCONFIG`.
+   - Extrai todos os dispositivos, modelos reais decodificados de `CUSTOM_VARS`, números de série, enlaces (`LINKS`), interfaces com IP, portas físicas de switch (mapeamento posicional 1-para-1 entre `RUNNINGCONFIG` e `<PORT>`), PCs e `RUNNINGCONFIG`.
    - Detecta dinamicamente os protocolos ativos: **VLANs/802.1Q, OSPF, RIP, EIGRP, Rotas Estáticas, Pools DHCP, Passive Interfaces, ACLs e NAT**.
-   - Calcula automaticamente a **RIB esperada** por menor caminho (Dijkstra) sobre a topologia real.
-   - Gera/sobrescreve as tabelas LaTeX encapsuladas em `cenario_XX/relatorio/sections/tabelas/` (`ifaces.tex`, `switchports.tex`, `pcs.tex`, `rib.tex`, `configs.tex`, `vlans.tex`), reportando quaisquer divergências encontradas em relação a arquivos pré-existentes no pacote.
-   - Gera o relatório de análise em `cenario_XX/analise/relatorio_cenarioXX_equipe8_lab_SD.md` e `.html`.
+   - Calcula automaticamente a **RIB esperada** por menor caminho (Dijkstra com ECMP) sobre a topologia real.
+   - Gera/sobrescreve as tabelas LaTeX encapsuladas em `cenario_XX/relatorio/sections/tabelas/` (`ifaces.tex`, `switchports.tex`, `pcs.tex`, `rib.tex`, `configs.tex`, `tabelas_geradas.tex`).
+   - Gera os relatórios analíticos completos de **9 seções** em `cenario_XX/analise/relatorio_cenarioXX_equipe8_lab_SD.md` e `.html` (estilizado com CSS `.rpt`).
 6. **Diagrama Visual da Topologia (`pics/cenario_real.png`)**:
    - Se o pacote em `archives/` trouxer imagens (`.png`/`.jpg`), copia para `cenario_XX/relatorio/pics/`.
-   - Se não houver nenhuma imagem, renderiza automaticamente `cenario_real.png` a partir das coordenadas lógicas $(x, y)$ e links do `.xml` (e avisa no log caso o usuário queira substituir pelo print da tela do Packet Tracer).
-7. **Esqueleto LaTeX e `README.md`**:
-   - Gera `cenario_XX/relatorio/main.tex` com capa padrão UFPA (`XXº Relatório`) e `cenario_XX/README.md` com o modelo de e-mail pronto.
+   - Se não houver nenhuma imagem, renderiza automaticamente `cenario_real.png` a partir das coordenadas lógicas $(x, y)$ e links do `.xml`.
+7. **Relatório LaTeX Inteligente e `README.md`**:
+   - Gera `cenario_XX/relatorio/main.tex` com capa padrão UFPA (`XXº Relatório`), `introduction.tex` e `body.tex` (com detecção automática de topologias Núcleo WAN vs. Roteadores de Borda, cálculo de métricas OSPF e DHCP) e `cenario_XX/README.md` com o modelo de e-mail pronto.
 
 ---
 
