@@ -70,28 +70,48 @@ trabalho_lab_sd/
 │   └── entregas/                  # Arquivos prontos para envio
 │       ├── cenario_02_equipe_08_Lab_SD.pdf
 │       └── cenario_02_equipe_08_Lab_SD.zip
-├── .agents/skills/novo-cenario-sd/ # Skill do Antigravity para criação automática de cenários
-│   ├── SKILL.md                   # Instruções e protocolo de automação para o agente
-│   └── scripts/process_cenario.py # Motor de extração XML, RIB Dijkstra, LaTeX e empacotamento
+├── .agents/skills/                # Skills do Antigravity para automação e auditoria
+│   ├── novo-cenario-sd/           # Criação automática, auditoria XML, RIB e LaTeX de cenários
+│   │   ├── SKILL.md
+│   │   └── scripts/process_cenario.py
+│   └── testar-generalizacao-sd/   # Suíte de testes de generalização, zero-drop XML e não-regressão
+│       ├── SKILL.md
+│       └── scripts/verify_generalization.py
 └── tools/                         # Utilitários compartilhados
     └── decrypt_pkt_9-0-0.py       # Decompilador de arquivos .pkt do Packet Tracer 9.x
 ```
 
 ---
 
-## 🛠️ Ferramentas e Automação
+## 🛠️ Ferramentas e Skills de Automação
 
-### 1. Skill de Automação de Novos Cenários (`.agents/skills/novo-cenario-sd/`)
-Basta adicionar o arquivo do novo cenário (`.pkt`, `.zip` ou `.tar.xz`) na pasta `archives/` e pedir ao agente para estruturar o cenário (ex: *"crie o Cenário 03 a partir do arquivo em archives"*). O motor também pode ser acionado via linha de comando:
+### 1. Skill de Criação e Padronização de Cenários (`.agents/skills/novo-cenario-sd/`)
+Coordena a criação completa de novos cenários (`cenario_03`, `cenario_04`, etc.) a partir de arquivos adicionados em `archives/` (`.pkt`, `.xml`, `.zip`, `.tar.xz`), extraindo 100% da topologia real (Roteadores, Switches L2/L3, VLANs/Trunks, OSPF, EIGRP, RIP, Rotas Estáticas, DHCP, PCs, Laptops, Servidores, Impressoras, VoIP), calculando a RIB esperada e gerando o relatório LaTeX/PDF e pacote `.zip` final:
 ```bash
-# Extrair, auditar XML, gerar tabelas LaTeX e estruturar Cenário XX:
+# Extrair, auditar XML, gerar tabelas LaTeX, análises (.md/.html) e estruturar Cenário XX:
 python3 .agents/skills/novo-cenario-sd/scripts/process_cenario.py --cenario 03
 
-# Compilar PDF (2 passadas pdflatex) e fechar o pacote .zip de entrega:
+# Apenas auditar um XML existente no cenário e exibir resumo no terminal:
+python3 .agents/skills/novo-cenario-sd/scripts/process_cenario.py --cenario 02 --audit-only
+
+# Compilar PDF (2 passadas pdflatex) e fechar o pacote .zip oficial de entrega:
 python3 .agents/skills/novo-cenario-sd/scripts/process_cenario.py --cenario 03 --package
 ```
 
-### 2. Decompilador Packet Tracer (`tools/decrypt_pkt_9-0-0.py`)
+### 2. Skill de Verificação de Generalização e Não-Regressão (`.agents/skills/testar-generalizacao-sd/`)
+Audita continuamente a capacidade de generalização da skill `novo-cenario-sd` conforme o número de cenários aumenta. Confronta o XML bruto do Packet Tracer contra os dados extraídos (*Zero-Drop Audit* de dispositivos, cabos e comandos IOS desconhecidos), valida a compilação `pdflatex` em *sandbox*, garante `0 diff` de não-regressão nos cenários anteriores e executa *stress tests* em topologias sintéticas multi-protocolo:
+```bash
+# Rodar auditoria completa em todos os cenários + stress test sintético + compilação LaTeX:
+python3 .agents/skills/testar-generalizacao-sd/scripts/verify_generalization.py --compile-latex
+
+# Testar apenas um cenário específico:
+python3 .agents/skills/testar-generalizacao-sd/scripts/verify_generalization.py --cenario 02 --compile-latex
+
+# Exportar relatório detalhado de cobertura e evolução em Markdown:
+python3 .agents/skills/testar-generalizacao-sd/scripts/verify_generalization.py --report-out relatorio_generalizacao.md
+```
+
+### 3. Decompilador Packet Tracer (`tools/decrypt_pkt_9-0-0.py`)
 Utilitário Python para descriptografar arquivos de topologia `.pkt` do Cisco Packet Tracer 9.x:
 ```bash
 python3 tools/decrypt_pkt_9-0-0.py caminho/para/topologia.pkt
