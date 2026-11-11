@@ -100,6 +100,31 @@ A topologia evidencia a replicação de boas práticas de administração de inf
 
 Na camada de conectividade sem fio, os pontos de acesso \texttt{LAP-PT} atuam em arquitetura centralizada com os controladores \texttt{WLC-PT}. A distribuição de sinal atende a clientes sem fio como o \texttt{Laptop3} e a \texttt{Printer0}, os quais requisitam parâmetros de rede dinâmicos via DHCP e direcionam o tráfego de saída aos gateways de suas respectivas redes.
 
+\subsection{Serviços de Aplicação: Servidor Web (HTTP/HTTPS) e Resolução DNS}
+
+O equipamento \texttt{Server0} (IP fixo \texttt{192.168.0.1/24}) concentra os serviços essenciais de camada de aplicação da infraestrutura corporativa:
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Servidor DNS (Domain Name System):} Opera com base de dados autoritativa local (TTL padrão de 86400 segundos) resolvendo requisições provenientes de todos os clientes das redes \texttt{192.168.0.0/24} e \texttt{172.16.0.0/16}, conforme os registros da Tabela~\ref{tab:dns_records}.
+  \item \textbf{Servidor Web (HTTP/HTTPS):} Disponibiliza um portal de intranet hospedando páginas web locais (\texttt{index.html}, \texttt{helloworld.html}, \texttt{image.html}, \texttt{copyrights.html} e formulário \texttt{create\_account.html}).
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{llll}
+\toprule
+Nome FQDN & Tipo & Endereço IPv4 & Função / Destino \\
+\midrule
+\texttt{www.local.br} & A-Record & \texttt{192.168.0.1} & Portal Web Corporativo (\texttt{Server0}) \\
+\texttt{router.lab.local} & A-Record & \texttt{192.168.0.254} & Interface de Roteamento (\texttt{Router0 Gi0/0}) \\
+\bottomrule
+\end{tabular}
+\caption{Registros da zona DNS configurados no \texttt{Server0}.}
+\label{tab:dns_records}
+\end{table}
+
+Quando qualquer estação de trabalho cabeada (\texttt{PC0} a \texttt{PC3}) ou cliente móvel submete uma requisição no navegador web para \texttt{http://www.local.br}, a resolução é realizada consultando o DNS em \texttt{192.168.0.1} (concedido via DHCP), viabilizando o carregamento imediato da página web corporativa simulada no Cisco Packet Tracer.
+
 \subsection{Configurações dos Equipamentos (Running-Configs)}
 
 A listagem a seguir reproduz fielmente as configurações essenciais extraídas dos arquivos de configuração dos dispositivos ativos presentes no arquivo de projeto:
