@@ -93,7 +93,8 @@ trabalho_lab_sd/
 │       ├── SKILL.md
 │       └── scripts/verify_generalization.py
 └── tools/                         # Utilitários compartilhados
-    └── decrypt_pkt_9-0-0.py       # Decompilador de arquivos .pkt do Packet Tracer 9.x
+    ├── decrypt_pkt_9-0-0.py       # Decompilador de arquivos .pkt do Packet Tracer 9.x (.pkt -> .xml)
+    └── encrypt_pkt_9-0-0.py       # Compilador/Criptografador Twofish-EAX (.xml -> .pkt)
 ```
 
 ---
@@ -148,6 +149,12 @@ python3 .agents/skills/testar-generalizacao-sd/scripts/verify_generalization.py 
 Utilitário Python para descriptografar arquivos de topologia `.pkt` do Cisco Packet Tracer 9.x:
 ```bash
 python3 tools/decrypt_pkt_9-0-0.py caminho/para/topologia.pkt
+```
+
+### 4. Compilador/Criptografador Packet Tracer (`tools/encrypt_pkt_9-0-0.py`)
+Utilitário Python para compilar/criptografar arquivos XML de volta para `.pkt` nativo (Twofish-EAX + zlib) do Cisco Packet Tracer 9.x:
+```bash
+python3 tools/encrypt_pkt_9-0-0.py caminho/para/topologia.xml [saida.pkt]
 ```
 
 ---
