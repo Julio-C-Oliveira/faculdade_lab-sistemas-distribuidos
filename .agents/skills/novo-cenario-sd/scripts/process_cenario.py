@@ -148,9 +148,17 @@ END_HOST_TYPES = (
     "WirelessEndDevice",
     "Tv",
     "Tablet",
+    "TabletPC",
     "SmartPhone",
+    "Pda",
     "GenericEndDevice",
     "Voip",
+)
+
+WIRELESS_INFRA_TYPES = (
+    "AccessPoint",
+    "LightWeightAccessPoint",
+    "WirelessLanController",
 )
 
 IGNORED_DEVICE_TYPES = ("Power Distribution Device",)

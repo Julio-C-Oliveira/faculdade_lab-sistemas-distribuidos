@@ -8,7 +8,7 @@
 
 ## 🏷️ Padrão Oficial de Nomenclatura
 
-Para manter consistência e conformidade com as submissões acadêmicas, todos os arquivos de cada cenário $XX \in \{01, 02\}$ seguem o padrão:
+Para manter consistência e conformidade com as submissões acadêmicas, todos os arquivos de cada cenário $XX \in \{01, 02, 03\}$ seguem o padrão:
 
 - **Pacote Compactado de Entrega**: `cenario_XX_equipe_08_Lab_SD.zip`
 - **Relatório em PDF**: `cenario_XX_equipe_08_Lab_SD.pdf`
@@ -70,6 +70,21 @@ trabalho_lab_sd/
 │   └── entregas/                  # Arquivos prontos para envio
 │       ├── cenario_02_equipe_08_Lab_SD.pdf
 │       └── cenario_02_equipe_08_Lab_SD.zip
+├── cenario_03/                    # Cenário 03: Topologia Corporativa, Serviços DHCP, DNS e Gerência Out-of-Band
+│   ├── README.md                  # Contexto, resumo DHCP e modelo de e-mail pronto
+│   ├── packet_tracer/             # Topologias (.pkt e .xml)
+│   │   ├── cenario_03_equipe_08_Lab_SD.pkt
+│   │   └── cenario_03_equipe_08_Lab_SD.xml
+│   ├── relatorio/                 # Projeto LaTeX oficial (3º Relatório)
+│   │   ├── main.tex               # Documento principal da equipe com capa UFPA
+│   │   ├── pics/                  # Logo_UFPA.png, cenario_real.png
+│   │   ├── sections/              # introduction, body, references, etc.
+│   │   │   └── tabelas/           # ifaces.tex, switchports.tex, pcs.tex, rib.tex, etc.
+│   │   └── template/sbc.bst       # Estilo bibliográfico SBC
+│   ├── analise/                   # Relatórios analíticos de 9 seções (.md e .html)
+│   └── entregas/                  # Arquivos prontos para envio
+│       ├── cenario_03_equipe_08_Lab_SD.pdf
+│       └── cenario_03_equipe_08_Lab_SD.zip
 ├── .agents/skills/                # Skills do Antigravity para automação e auditoria
 │   ├── novo-cenario-sd/           # Criação automática, auditoria XML, RIB e LaTeX de cenários
 │   │   ├── SKILL.md
@@ -141,3 +156,4 @@ python3 tools/decrypt_pkt_9-0-0.py caminho/para/topologia.pkt
 
 - [Cenário 01 — Detalhes e E-mail de Envio](cenario_01/README.md)
 - [Cenário 02 — Detalhes e E-mail de Envio](cenario_02/README.md)
+- [Cenário 03 — Detalhes e E-mail de Envio](cenario_03/README.md)

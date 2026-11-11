@@ -1,0 +1,15 @@
+\section{INTRODUÇÃO}
+
+Este relatório apresenta a documentação técnica e a análise estrutural da arquitetura de rede do terceiro cenário (Cenário 03) do Laboratório de Sistemas Distribuídos, modelada e simulada no Cisco Packet Tracer (v9.0.1). A infraestrutura foi concebida para atender a um ambiente corporativo/departamental acadêmico (\texttt{Router\_TI\_CBCC\_2026}), integrando conectividade cabeada e sem fio, gerência \textit{out-of-band} via console, serviços de endereçamento dinâmico centralizado através do protocolo DHCP (\textit{Dynamic Host Configuration Protocol}) e resolução de nomes (DNS).
+
+O objetivo deste trabalho é examinar a configuração e a operação integrada das camadas física, de enlace, de rede e de aplicação, detalhando os esquemas de particionamento e endereçamento IPv4, o dimensionamento de escopos e reservas DHCP, a estrutura de comutação local, bem como o encaminhamento inter-redes realizado pelo roteador central.
+
+\subsection{Contextualização e Visão Geral da Topologia}
+
+A topologia interconecta dois segmentos de rede local distintos por meio de um roteador central Cisco 1941:
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Sub-rede Departamental 1 (LAN 192 --- 192.168.0.0/24):} Atendida pela interface \texttt{GigabitEthernet0/0} do roteador e comutada pelo comutador \texttt{Switch\_01} (Cisco Catalyst 2960-24TT). Concentra o servidor central de rede (\texttt{Server0}), estações de trabalho cabeadas (\texttt{PC0} e \texttt{PC1}), equipamentos de infraestrutura \textit{wireless} (\texttt{Light Weight Access Point0} e \texttt{Wireless LAN Controller0}), impressora de rede (\texttt{Printer0}) e terminal de console dedicado (\texttt{Laptop0}).
+  \item \textbf{Sub-rede Departamental 2 (LAN 172 --- 172.16.0.0/16):} Atendida pela interface \texttt{GigabitEthernet0/1} do roteador e comutada pelo comutador \texttt{Switch\_02} (Cisco Catalyst 2960-24TT). Atende estações cabeadas (\texttt{PC2} e \texttt{PC3}), infraestrutura \textit{wireless} (\texttt{Light Weight Access Point1} e \texttt{Wireless LAN Controller1}), clientes móveis (\texttt{Laptop3}, \texttt{Smartphone0}, \texttt{Tablet PC0}) e terminal de console dedicado (\texttt{Laptop1}).
+\end{enumerate}
+
+O roteamento entre as duas sub-redes ocorre nativamente no roteador de borda, que também centraliza a distribuição de parâmetros de rede via DHCP para ambas as LANs, respeitando listas de endereços reservados para ativos críticos e interfaces de gerência (SVIs).

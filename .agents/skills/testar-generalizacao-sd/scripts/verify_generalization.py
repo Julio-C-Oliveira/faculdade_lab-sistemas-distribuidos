@@ -105,6 +105,7 @@ KNOWN_BOILERPLATE_IOS_PREFIXES = (
     "no ip cef",
     "ip flow-export",
     "ptp clock",
+    "license udi pid ",
 )
 
 
@@ -116,7 +117,7 @@ def audit_raw_xml_zero_drop(xml_path: Path, parsed_data: dict) -> dict:
     raw_devices = []
     unknown_device_types = []
     unrecognized_ios_cmds = []
-    recognized_types = set(pc.END_HOST_TYPES) | set(pc.IGNORED_DEVICE_TYPES) | {
+    recognized_types = set(pc.END_HOST_TYPES) | set(pc.IGNORED_DEVICE_TYPES) | set(getattr(pc, "WIRELESS_INFRA_TYPES", ())) | {
         "Router",
         "Switch",
         "Multilayer Switch",

@@ -1,0 +1,33 @@
+\subsection*{Router0}
+\begin{lstlisting}
+hostname Router_TI_CBCC_2026
+ip dhcp excluded-address 192.168.0.254
+ip dhcp excluded-address 192.168.0.200
+ip dhcp excluded-address 192.168.0.1
+ip dhcp excluded-address 172.16.255.200
+ip dhcp excluded-address 172.16.255.254
+ip dhcp pool REDE192
+ network 192.168.0.0 255.255.255.0
+ default-router 192.168.0.254
+ dns-server 192.168.0.1
+ip dhcp pool REDE172
+ network 172.16.0.0 255.255.0.0
+ default-router 172.16.255.254
+ dns-server 192.168.0.1
+interface GigabitEthernet0/0
+ ip address 192.168.0.254 255.255.255.0
+interface GigabitEthernet0/1
+ ip address 172.16.255.254 255.255.0.0
+\end{lstlisting}
+\subsection*{Switch\_01}
+\begin{lstlisting}
+hostname Switch01
+interface Vlan1
+ ip address 192.168.0.200 255.255.255.0
+\end{lstlisting}
+\subsection*{Switch\_02}
+\begin{lstlisting}
+hostname Switch02
+interface Vlan1
+ ip address 172.16.255.200 255.255.0.0
+\end{lstlisting}
