@@ -1178,14 +1178,38 @@ def write_latex_tables(parsed_data: dict, tabelas_dir: Path):
         r"\midrule",
     ]
     last_sw = None
+    sw_ports_by_sw = {}
     for sp in parsed_data["switch_ports"]:
-        if last_sw is not None and sp["switch"] != last_sw:
+        sw_ports_by_sw.setdefault(sp["switch"], []).append(sp)
+
+    for swn, ports in sw_ports_by_sw.items():
+        if last_sw is not None:
             sw_lines.append(r"\midrule")
-        last_sw = sp["switch"]
-        sw_lines.append(
-            f"{latex_escape(sp['switch'])} & {latex_escape(sp['port'])} & "
-            f"{latex_escape(sp['bw'])} & {latex_escape(sp['connected_to'])}\\\\"
-        )
+        last_sw = swn
+
+        active_ports = [p for p in ports if p["connected_to"] != "livre"]
+        free_ports = [p for p in ports if p["connected_to"] == "livre"]
+
+        # Se houver muitas portas livres (> 3), listar ativas e resumir as livres para evitar overflow de página
+        if len(free_ports) > 3:
+            for ap in active_ports:
+                sw_lines.append(
+                    f"{latex_escape(ap['switch'])} & {latex_escape(ap['port'])} & "
+                    f"{latex_escape(ap['bw'])} & {latex_escape(ap['connected_to'])}\\\\"
+                )
+            p_names = [p["port"] for p in free_ports]
+            summary_range = f"{p_names[0]}--{p_names[-1]}" if len(p_names) > 1 else p_names[0]
+            bw_summary = "100M / 1G" if any("G" in p["bw"] for p in free_ports) else free_ports[0]["bw"]
+            sw_lines.append(
+                f"{latex_escape(swn)} & {latex_escape(summary_range)} & "
+                f"{latex_escape(bw_summary)} & Portas livres (sem conexão)\\\\"
+            )
+        else:
+            for sp in ports:
+                sw_lines.append(
+                    f"{latex_escape(sp['switch'])} & {latex_escape(sp['port'])} & "
+                    f"{latex_escape(sp['bw'])} & {latex_escape(sp['connected_to'])}\\\\"
+                )
     sw_lines.extend([r"\bottomrule", r"\end{tabular}"])
     (tabelas_dir / "switchports.tex").write_text("\n".join(sw_lines) + "\n", encoding="utf-8")
 

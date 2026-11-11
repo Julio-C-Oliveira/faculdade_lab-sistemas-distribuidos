@@ -302,11 +302,33 @@ def validate_scenario(cenario_num: int, xml_path: Path, cenario_dir: Path = None
                 stderr=subprocess.STDOUT,
                 text=True,
             )
-            pdf_ok = res.returncode == 0 and (tmp_path / "relatorio" / "main.pdf").exists()
+            pdf_path = tmp_path / "relatorio" / "main.pdf"
+            log_path = tmp_path / "relatorio" / "main.log"
+            pdf_ok = res.returncode == 0 and pdf_path.exists()
+
+            # Auditoria de Warnings e Erros Estruturais do LaTeX (Overfull vbox e floats excessivos)
+            layout_issues = []
+            if log_path.exists():
+                log_content = log_path.read_text(encoding="latin-1", errors="ignore")
+                for m in re.finditer(r"Overfull \\vbox \(([0-9.]+)pt too high\)", log_content):
+                    val = float(m.group(1))
+                    if val > 12.0:  # Acima de 12pt representa mais de uma linha inteira estourando
+                        layout_issues.append(f"Overfull vbox ({val:.1f}pt)")
+                if "Float too large for page" in log_content:
+                    layout_issues.append("Float too large for page")
+
+            comp_ok = pdf_ok and len(layout_issues) == 0
+            if comp_ok:
+                detail = f"main.pdf gerado ({pdf_path.stat().st_size:,} bytes, 0 erros/overflows críticos de layout)"
+            elif pdf_ok:
+                detail = f"main.pdf gerado com avisos de layout/overflow: {', '.join(layout_issues)}"
+            else:
+                detail = "Falha na compilação pdflatex"
+
             add_check(
-                "Compilação LaTeX (pdflatex em sandbox)",
-                pdf_ok,
-                f"main.pdf gerado ({(tmp_path / 'relatorio' / 'main.pdf').stat().st_size:,} bytes)" if pdf_ok else "Falha na compilação pdflatex",
+                "Compilação LaTeX e Sanidade de Layout",
+                comp_ok,
+                detail,
             )
 
     return {"cenario": cenario_num, "checks": checks, "warnings": warnings, "data": data}
