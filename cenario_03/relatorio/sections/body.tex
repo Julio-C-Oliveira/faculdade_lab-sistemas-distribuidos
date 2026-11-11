@@ -105,7 +105,7 @@ Na camada de conectividade sem fio, os pontos de acesso \texttt{LAP-PT} atuam em
 O equipamento \texttt{Server0} (IP fixo \texttt{192.168.0.1/24}) concentra os serviços essenciais de camada de aplicação da infraestrutura corporativa:
 \begin{itemize}[leftmargin=2em]
   \item \textbf{Servidor DNS (Domain Name System):} Opera com base de dados autoritativa local (TTL padrão de 86400 segundos) resolvendo requisições provenientes de todos os clientes das redes \texttt{192.168.0.0/24} e \texttt{172.16.0.0/16}, conforme os registros da Tabela~\ref{tab:dns_records}.
-  \item \textbf{Servidor Web (HTTP/HTTPS):} Disponibiliza um portal de intranet hospedando páginas web locais (\texttt{index.html}, \texttt{helloworld.html}, \texttt{image.html}, \texttt{copyrights.html} e formulário \texttt{create\_account.html}).
+  \item \textbf{Servidor Web (HTTP/HTTPS):} Disponibiliza um portal de intranet institucional hospedando páginas web locais (\texttt{index.html}, \texttt{helloworld.html}, \texttt{image.html}, \texttt{copyrights.html} e formulário \texttt{create\_account.html}).
 \end{itemize}
 
 \begin{table}[H]
@@ -124,6 +124,15 @@ Nome FQDN & Tipo & Endereço IPv4 & Função / Destino \\
 \end{table}
 
 Quando qualquer estação de trabalho cabeada (\texttt{PC0} a \texttt{PC3}) ou cliente móvel submete uma requisição no navegador web para \texttt{http://www.local.br}, a resolução é realizada consultando o DNS em \texttt{192.168.0.1} (concedido via DHCP), viabilizando o carregamento imediato da página web corporativa simulada no Cisco Packet Tracer.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.82\linewidth]{pics/portal_web.png}
+    \caption{Portal corporativo da Equipe 08 (\texttt{http://www.local.br}) acessado pelo navegador web de uma estação cliente no Cisco Packet Tracer.}
+    \label{fig:portal_web}
+\end{figure}
+
+O portal foi personalizado com a identidade da Universidade Federal do Pará e da Equipe 08, contendo informações em tempo real da topologia de rede, links de navegação e imagem temática da cantora Sabrina Carpenter (\textit{Short n' Sweet} / \textit{Espresso}), embutida no sistema de arquivos do servidor Web em resolução nativa compatível.
 
 \subsection{Configurações dos Equipamentos (Running-Configs)}
 
